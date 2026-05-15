@@ -1,0 +1,43 @@
+# Entity: currency
+
+main: kit: entity: currency: {
+
+  alias: field: {}
+
+  fields: [
+    {
+      name: "name"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "symbol"
+      req: false
+      type: "`$STRING`"
+    }
+  ]
+
+  name: "currency"
+  op: {
+    list: {
+      name: "list"
+      points: [
+        {
+          method: "GET"
+          orig: "/api/all-currencies"
+          parts: [
+            "api"
+            "all-currencies"
+          ]
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+  }
+
+
+
+}

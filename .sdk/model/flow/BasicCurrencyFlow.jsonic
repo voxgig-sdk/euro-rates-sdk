@@ -1,0 +1,22 @@
+# BasicCurrencyFlow
+
+main: kit: flow: BasicCurrencyFlow:
+{
+  entity: "currency",
+  kind: "basic",
+  name: "BasicCurrencyFlow",
+  step: [
+    {
+      op: "list",
+      valid: [
+        {
+          apply: "ItemExists",
+          def: {
+            ref: "currency_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicCurrencyFlow"
+}

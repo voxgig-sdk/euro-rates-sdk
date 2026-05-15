@@ -1,0 +1,20 @@
+# Guide
+
+guide: {
+  metrics: count: entity: 2
+  metrics: count: path: 2
+  metrics: count: method: 2
+
+  entity: currency: {
+    path: "/api/all-currencies": {
+      op: list: method: *GET
+    }
+  }
+
+  entity: exchange_rate: {
+    path: "/api/rates": {
+      op: load: method: *GET
+    }
+  }
+
+}

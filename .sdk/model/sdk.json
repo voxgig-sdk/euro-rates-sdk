@@ -1,0 +1,424 @@
+{
+  "name": "euro-rates",
+  "origin": "voxgig-sdk",
+  "def": "euro-rates_0.1.0.json",
+  "main": {
+    "kit": {
+      "info": {
+        "description": "Free API connect to https://www.ecb.europa.eu",
+        "servers": [
+          {
+            "url": "https://api.exchangerate.host"
+          }
+        ],
+        "title": "Exchange Rate API",
+        "version": "1.0.0"
+      },
+      "config": {
+        "auth": {
+          "prefix": "Bearer"
+        },
+        "headers": {
+          "content-type": "application/json"
+        }
+      },
+      "entity": {
+        "currency": {
+          "alias": {
+            "field": {}
+          },
+          "fields": [
+            {
+              "name": "name",
+              "req": false,
+              "type": "`$STRING`",
+              "active": true
+            },
+            {
+              "name": "symbol",
+              "req": false,
+              "type": "`$STRING`",
+              "active": true
+            }
+          ],
+          "name": "currency",
+          "op": {
+            "list": {
+              "name": "list",
+              "points": [
+                {
+                  "method": "GET",
+                  "orig": "/api/all-currencies",
+                  "parts": [
+                    "api",
+                    "all-currencies"
+                  ],
+                  "transform": {
+                    "req": "`reqdata`",
+                    "res": "`body`"
+                  },
+                  "active": true,
+                  "args": {},
+                  "select": {}
+                }
+              ],
+              "input": "data"
+            }
+          },
+          "active": true,
+          "relations": {
+            "ancestors": []
+          }
+        },
+        "exchange_rate": {
+          "alias": {
+            "field": {}
+          },
+          "name": "exchange_rate",
+          "op": {
+            "load": {
+              "name": "load",
+              "points": [
+                {
+                  "args": {
+                    "query": [
+                      {
+                        "example": "EUR",
+                        "kind": "query",
+                        "name": "from",
+                        "orig": "from",
+                        "reqd": true,
+                        "type": "`$STRING`",
+                        "active": true
+                      },
+                      {
+                        "example": "HKD,GBP,USD",
+                        "kind": "query",
+                        "name": "to",
+                        "orig": "to",
+                        "reqd": true,
+                        "type": "`$STRING`",
+                        "active": true
+                      }
+                    ]
+                  },
+                  "method": "GET",
+                  "orig": "/api/rates",
+                  "parts": [
+                    "api",
+                    "rates"
+                  ],
+                  "select": {
+                    "exist": [
+                      "from",
+                      "to"
+                    ]
+                  },
+                  "transform": {
+                    "req": "`reqdata`",
+                    "res": "`body`"
+                  },
+                  "active": true
+                }
+              ],
+              "input": "data"
+            }
+          },
+          "active": true,
+          "fields": [],
+          "relations": {
+            "ancestors": []
+          }
+        }
+      },
+      "feature": {
+        "test": {
+          "name": "test",
+          "title": "In-memory mock transport for testing without a live server",
+          "version": "0.0.1",
+          "active": true,
+          "config": {
+            "options": {
+              "active": false
+            }
+          },
+          "hook": {
+            "PostConstruct": {
+              "active": true,
+              "await": false
+            },
+            "PostConstructEntity": {
+              "active": true,
+              "await": false
+            },
+            "SetData": {
+              "active": true,
+              "await": false
+            },
+            "GetData": {
+              "active": true,
+              "await": false
+            },
+            "SetMatch": {
+              "active": true
+            },
+            "GetMatch": {
+              "active": true,
+              "await": false
+            },
+            "PrePoint": {
+              "active": true
+            },
+            "PreSpec": {
+              "active": true,
+              "await": false
+            },
+            "PreRequest": {
+              "active": true,
+              "await": false
+            },
+            "PreResponse": {
+              "active": true,
+              "await": false
+            },
+            "PreResult": {
+              "active": true,
+              "await": false
+            },
+            "PreTarget": {
+              "active": false,
+              "await": false
+            },
+            "PostOperation": {
+              "active": false,
+              "await": false
+            }
+          },
+          "target": {
+            "ts": {
+              "deps": {}
+            },
+            "go": {
+              "deps": {}
+            },
+            "lua": {
+              "deps": {}
+            },
+            "php": {
+              "deps": {}
+            },
+            "py": {
+              "deps": {}
+            },
+            "rb": {
+              "deps": {}
+            }
+          }
+        }
+      },
+      "flow": {
+        "BasicCurrencyFlow": {
+          "entity": "currency",
+          "kind": "basic",
+          "name": "BasicCurrencyFlow",
+          "step": [
+            {
+              "op": "list",
+              "valid": [
+                {
+                  "apply": "ItemExists",
+                  "def": {
+                    "ref": "currency_ref01"
+                  }
+                }
+              ],
+              "active": true,
+              "match": {},
+              "data": {},
+              "input": {},
+              "spec": []
+            }
+          ],
+          "key$": "BasicCurrencyFlow",
+          "active": true,
+          "param": {}
+        },
+        "BasicExchangeRateFlow": {
+          "entity": "exchange_rate",
+          "kind": "basic",
+          "name": "BasicExchangeRateFlow",
+          "step": [
+            {
+              "input": {
+                "ref": "exchange_rate_ref01",
+                "srcdatavar": "exchange_rate_ref01_data",
+                "suffix": "_dt0"
+              },
+              "op": "load",
+              "valid": [
+                {
+                  "apply": "TextFieldMark",
+                  "def": {
+                    "mark": "Mark01-exchange_rate_ref01"
+                  }
+                }
+              ],
+              "active": true,
+              "match": {},
+              "data": {},
+              "spec": []
+            }
+          ],
+          "key$": "BasicExchangeRateFlow",
+          "active": true,
+          "param": {}
+        }
+      },
+      "target": {
+        "ts": {
+          "title": "TypeScript",
+          "ext": "ts",
+          "comment": {
+            "line": "//"
+          },
+          "module": {
+            "name": "euro-rates"
+          },
+          "base": "node_modules/@voxgig/sdkgen/project/.sdk",
+          "deps": {
+            "dotenv": {
+              "active": true,
+              "version": "^17.4.2",
+              "kind": "dev"
+            },
+            "typescript": {
+              "active": true,
+              "version": "^5.9.3",
+              "kind": "dev"
+            },
+            "@types/node": {
+              "active": true,
+              "version": "^25.6.0",
+              "kind": "dev"
+            }
+          },
+          "name": "ts",
+          "active": true
+        },
+        "go": {
+          "title": "Golang",
+          "ext": "go",
+          "comment": {
+            "line": "//"
+          },
+          "module": {
+            "name": "euro-rates"
+          },
+          "srcfeature": false,
+          "deps": {
+            "github.com/voxgig/struct": {
+              "active": true,
+              "version": "v0.0.0",
+              "replace": "./utility/struct",
+              "kind": "prod"
+            }
+          },
+          "name": "go",
+          "active": true
+        },
+        "lua": {
+          "title": "Lua",
+          "ext": "lua",
+          "comment": {
+            "line": "--"
+          },
+          "module": {
+            "name": "euro-rates"
+          },
+          "srcfeature": false,
+          "deps": {
+            "dkjson": {
+              "active": true,
+              "version": "2.5",
+              "kind": "prod"
+            }
+          },
+          "name": "lua",
+          "active": true
+        },
+        "php": {
+          "title": "PHP",
+          "ext": "php",
+          "comment": {
+            "line": "//"
+          },
+          "module": {
+            "name": "euro-rates"
+          },
+          "srcfeature": false,
+          "deps": {},
+          "name": "php",
+          "active": true
+        },
+        "py": {
+          "title": "Python",
+          "ext": "py",
+          "comment": {
+            "line": "#"
+          },
+          "module": {
+            "name": "euro-rates"
+          },
+          "srcfeature": false,
+          "deps": {
+            "requests": {
+              "active": true,
+              "version": "2.33",
+              "kind": "prod"
+            }
+          },
+          "name": "py",
+          "active": true
+        },
+        "rb": {
+          "title": "Ruby",
+          "ext": "rb",
+          "comment": {
+            "line": "#"
+          },
+          "module": {
+            "name": "euro-rates"
+          },
+          "srcfeature": false,
+          "deps": {
+            "voxgig-struct": {
+              "active": true,
+              "version": "0.0.10",
+              "kind": "prod"
+            },
+            "json": {
+              "active": true,
+              "version": "0",
+              "kind": "prod"
+            }
+          },
+          "name": "rb",
+          "active": true
+        }
+      },
+      "option": {}
+    },
+    "def": {
+      "desc": ""
+    },
+    "api": {
+      "guide": {},
+      "entity": {}
+    }
+  },
+  "name__orig": "euro-rates",
+  "Name": "EuroRates",
+  "name_": "euro_rates",
+  "name-": "euro-rates",
+  "NAME": "EURO-RATES"
+}

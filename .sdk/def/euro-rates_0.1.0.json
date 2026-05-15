@@ -1,0 +1,240 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Exchange Rate API",
+    "description": "Free API connect to https://www.ecb.europa.eu",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.exchangerate.host"
+    }
+  ],
+  "paths": {
+    "/api/all-currencies": {
+      "get": {
+        "tags": [
+          "Currencies"
+        ],
+        "summary": "List all available currencies",
+        "operationId": "getAllCurrencies",
+        "responses": {
+          "200": {
+            "description": "List of currencies",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "properties": {
+                      "symbol": {
+                        "type": "string"
+                      },
+                      "name": {
+                        "type": "string"
+                      }
+                    },
+                    "type": "object"
+                  }
+                },
+                "example": [
+                  {
+                    "symbol": "USD",
+                    "name": "US Dollar"
+                  },
+                  {
+                    "symbol": "EUR",
+                    "name": "Euro"
+                  },
+                  {
+                    "symbol": "JPY",
+                    "name": "Japanese Yen"
+                  },
+                  {
+                    "symbol": "GBP",
+                    "name": "British Pound"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/rates": {
+      "get": {
+        "tags": [
+          "Exchange Rates"
+        ],
+        "summary": "Get exchange rates from EUR to one or more currencies",
+        "operationId": "56d2fdecaee833415819830b15ab7d8c",
+        "parameters": [
+          {
+            "name": "from",
+            "in": "query",
+            "description": "Base currency (only EUR supported)",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "EUR"
+            },
+            "example": "EUR"
+          },
+          {
+            "name": "to",
+            "in": "query",
+            "description": "Target currency or comma-separated list of currencies",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "HKD,GBP,USD"
+            },
+            "example": "HKD,GBP,USD"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response. Returns either a single currency rate or multiple currency rates.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "properties": {
+                        "from": {
+                          "type": "string",
+                          "example": "EUR"
+                        },
+                        "rates": {
+                          "properties": {
+                            "HKD": {
+                              "properties": {
+                                "rate": {
+                                  "type": "number",
+                                  "example": 0.8535
+                                },
+                                "date": {
+                                  "type": "string",
+                                  "example": "2025-06-26"
+                                }
+                              },
+                              "type": "object"
+                            },
+                            "GBP": {
+                              "properties": {
+                                "rate": {
+                                  "type": "number",
+                                  "example": 9.1803
+                                },
+                                "date": {
+                                  "type": "string",
+                                  "example": "2025-06-26"
+                                }
+                              },
+                              "type": "object"
+                            },
+                            "USD": {
+                              "properties": {
+                                "rate": {
+                                  "type": "number",
+                                  "example": 1.1695
+                                },
+                                "date": {
+                                  "type": "string",
+                                  "example": "2025-06-26"
+                                }
+                              },
+                              "type": "object"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "source": {
+                          "type": "string",
+                          "example": "European Central Bank (ECB)"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    {
+                      "properties": {
+                        "from": {
+                          "type": "string",
+                          "example": "EUR"
+                        },
+                        "to": {
+                          "type": "string",
+                          "example": "USD"
+                        },
+                        "rate": {
+                          "type": "number",
+                          "example": 1.0895
+                        },
+                        "date": {
+                          "type": "string",
+                          "example": "2025-06-26"
+                        },
+                        "source": {
+                          "type": "string",
+                          "example": "European Central Bank (ECB)"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "properties": {
+                        "error": {
+                          "type": "string",
+                          "example": "Invalid or missing parameters"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    {
+                      "properties": {
+                        "error": {
+                          "type": "string",
+                          "example": "Only EUR as base currency is supported by the ECB"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No data",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Currencies",
+      "description": "Currencies"
+    },
+    {
+      "name": "Exchange Rates",
+      "description": "Exchange Rates"
+    }
+  ]
+}

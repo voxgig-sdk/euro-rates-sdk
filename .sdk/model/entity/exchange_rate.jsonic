@@ -1,0 +1,56 @@
+# Entity: exchange_rate
+
+main: kit: entity: exchange_rate: {
+
+  alias: field: {}
+
+  name: "exchange_rate"
+  op: {
+    load: {
+      name: "load"
+      points: [
+        {
+          args: {
+            query: [
+              {
+                example: "EUR"
+                kind: "query"
+                name: "from"
+                orig: "from"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                example: "HKD,GBP,USD"
+                kind: "query"
+                name: "to"
+                orig: "to"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "GET"
+          orig: "/api/rates"
+          parts: [
+            "api"
+            "rates"
+          ]
+          select: {
+            exist: [
+              "from"
+              "to"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+  }
+
+
+
+}

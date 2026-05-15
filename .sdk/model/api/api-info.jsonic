@@ -1,0 +1,19 @@
+# API Information
+
+
+main: {
+  kit: {
+    info: {
+      description: "Free API connect to https://www.ecb.europa.eu"
+      servers: [
+        {
+          url: "https://api.exchangerate.host"
+        }
+      ]
+      title: "Exchange Rate API"
+      version: "1.0.0"
+    }
+  }
+}
+
+}
