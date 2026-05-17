@@ -1,7 +1,7 @@
 package feature
 
 import (
-	"github.com/voxgig-sdk/euro-rates-sdk/core"
+	"github.com/voxgig-sdk/euro-rates-sdk/go/core"
 )
 
 type BaseFeature struct {

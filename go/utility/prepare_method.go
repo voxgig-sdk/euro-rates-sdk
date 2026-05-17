@@ -1,6 +1,6 @@
 package utility
 
-import "github.com/voxgig-sdk/euro-rates-sdk/core"
+import "github.com/voxgig-sdk/euro-rates-sdk/go/core"
 
 func prepareMethodUtil(ctx *core.Context) string {
 	opname := ctx.Op.Name

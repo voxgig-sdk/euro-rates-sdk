@@ -1,10 +1,10 @@
 package voxgigeuroratessdk
 
 import (
-	"github.com/voxgig-sdk/euro-rates-sdk/core"
-	"github.com/voxgig-sdk/euro-rates-sdk/entity"
-	"github.com/voxgig-sdk/euro-rates-sdk/feature"
-	_ "github.com/voxgig-sdk/euro-rates-sdk/utility"
+	"github.com/voxgig-sdk/euro-rates-sdk/go/core"
+	"github.com/voxgig-sdk/euro-rates-sdk/go/entity"
+	"github.com/voxgig-sdk/euro-rates-sdk/go/feature"
+	_ "github.com/voxgig-sdk/euro-rates-sdk/go/utility"
 )
 
 // Type aliases preserve external API.

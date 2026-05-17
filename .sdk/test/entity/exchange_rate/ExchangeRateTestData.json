@@ -1,9 +1,15 @@
 {
   "existing": {
     "exchange_rate": {
-      "EXCHANGE_RATE00": {},
-      "EXCHANGE_RATE01": {},
-      "EXCHANGE_RATE02": {}
+      "EXCHANGE_RATE00": {
+        "id": "EXCHANGE_RATE00"
+      },
+      "EXCHANGE_RATE01": {
+        "id": "EXCHANGE_RATE01"
+      },
+      "EXCHANGE_RATE02": {
+        "id": "EXCHANGE_RATE02"
+      }
     }
   },
   "new": {
