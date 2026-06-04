@@ -82,7 +82,6 @@ def exchange_rate_basic_setup(extra)
     "EURORATES_TEST_EXCHANGE_RATE_ENTID" => idmap,
     "EURORATES_TEST_LIVE" => "FALSE",
     "EURORATES_TEST_EXPLAIN" => "FALSE",
-    "EURORATES_APIKEY" => "NONE",
   })
 
   idmap_resolved = Helpers.to_map(
@@ -94,7 +93,6 @@ def exchange_rate_basic_setup(extra)
   if env["EURORATES_TEST_LIVE"] == "TRUE"
     merged_opts = Vs.merge([
       {
-        "apikey" => env["EURORATES_APIKEY"],
       },
       extra || {},
     ])

@@ -12,8 +12,28 @@ main: {
       ]
       title: "Exchange Rate API"
       version: "1.0.0"
+      tagline: "Free EUR-centric foreign exchange rates sourced from the European Central Bank"
+      homepage: "https://api.exchangerate.host"
+      docs_url: "https://www.exchangerate.host"
+      license_short: "Proprietary terms; consult exchangerate.host (APILayer) Terms of Service."
+      license_md: `- Operated by [exchangerate.host](https://www.exchangerate.host), an APILayer product.
+- Underlying ECB reference rates are public information from the European Central Bank.
+- No explicit attribution requirement is documented on the catalogue page; review the provider's Terms of Service before redistribution.
+- Usage is subject to the API plan you sign up for (free and paid tiers).`
+      about_md: `[Exchange Rate API](https://api.exchangerate.host) is a REST service that exposes current and historical foreign exchange rates, with rates derived from the [European Central Bank](https://www.ecb.europa.eu/) and other financial data providers. The service is run by [APILayer](https://apilayer.com/).
+
+What you get from the API:
+- Latest exchange rates for EUR against a list of supported currencies
+- Cross-rate lookups starting from a chosen base currency
+- A directory of supported currency symbols
+- Historical end-of-day rates over a date range, with selectable frequency
+
+Operational notes: historical rates are end-of-day values timestamped at 23:59 GMT, with roughly 19 years of history available. The free tier is capped at 100 requests per month, and response headers report current rate-limit usage. The community catalogue at [freepublicapis.com](https://freepublicapis.com/euro-rates-api) notes that CORS is disabled across endpoints.`
+      entity_desc: {
+        currency: "A supported currency, typically identified by its ISO 4217 code, used as the base or target of a rate lookup."
+        exchange_rate: "A foreign exchange rate quote between two currencies, available either as the latest value or as a historical end-of-day series."
+      }
+      auth: false
     }
   }
-}
-
 }

@@ -68,14 +68,12 @@ function currency_direct_setup($mockres)
     $env = Runner::env_override([
         "EURORATES_TEST_CURRENCY_ENTID" => [],
         "EURORATES_TEST_LIVE" => "FALSE",
-        "EURORATES_APIKEY" => "NONE",
     ]);
 
     $live = $env["EURORATES_TEST_LIVE"] === "TRUE";
 
     if ($live) {
         $merged_opts = [
-            "apikey" => $env["EURORATES_APIKEY"],
         ];
         $client = new EuroRatesSDK($merged_opts);
         return [

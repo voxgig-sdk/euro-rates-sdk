@@ -61,14 +61,12 @@ def _currency_direct_setup(mockres):
     env = runner.env_override({
         "EURORATES_TEST_CURRENCY_ENTID": {},
         "EURORATES_TEST_LIVE": "FALSE",
-        "EURORATES_APIKEY": "NONE",
     })
 
     live = env.get("EURORATES_TEST_LIVE") == "TRUE"
 
     if live:
         merged_opts = {
-            "apikey": env.get("EURORATES_APIKEY"),
         }
         client = EuroRatesSDK(merged_opts)
         return {
