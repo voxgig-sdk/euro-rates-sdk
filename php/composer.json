@@ -1,8 +1,17 @@
 {
   "name": "voxgig-sdk/euro-rates",
-  "description": "EuroRates SDK for PHP",
+  "description": "Unofficial generated PHP SDK for the Exchange Rate public API. Not affiliated with or endorsed by the upstream API provider.",
   "type": "library",
+  "keywords": ["voxgig", "sdk", "generated-sdk", "openapi", "api-client", "euro-rates"],
+  "homepage": "https://github.com/voxgig-sdk/euro-rates-sdk",
   "license": "MIT",
+  "authors": [
+    { "name": "Voxgig", "homepage": "https://voxgig.com" }
+  ],
+  "support": {
+    "issues": "https://github.com/voxgig-sdk/euro-rates-sdk/issues",
+    "source": "https://github.com/voxgig-sdk/euro-rates-sdk"
+  },
   "minimum-stability": "stable",
   "require": {
     "php": ">=8.2"

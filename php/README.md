@@ -10,7 +10,7 @@ The PHP SDK for the EuroRates API — an entity-oriented client using PHP conven
 
 ## Install
 ```bash
-composer require voxgig/euro-rates-sdk
+composer require voxgig-sdk/euro-rates
 ```
 
 

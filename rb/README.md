@@ -10,13 +10,13 @@ The Ruby SDK for the EuroRates API — an entity-oriented client using idiomatic
 
 ## Install
 ```bash
-gem install euro-rates-sdk
+gem install voxgig-sdk-euro-rates
 ```
 
 Or add to your `Gemfile`:
 
 ```ruby
-gem "euro-rates-sdk"
+gem "voxgig-sdk-euro-rates"
 ```
 
 Then run:

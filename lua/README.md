@@ -10,7 +10,7 @@ The Lua SDK for the EuroRates API — an entity-oriented client using Lua conven
 
 ## Install
 ```bash
-luarocks install euro-rates-sdk
+luarocks install voxgig-sdk-euro-rates
 ```
 
 If the module is not yet published, add the source directory to

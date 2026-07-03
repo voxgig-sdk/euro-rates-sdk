@@ -10,7 +10,7 @@ The Python SDK for the EuroRates API — an entity-oriented client following Pyt
 
 ## Install
 ```bash
-pip install euro-rates-sdk
+pip install voxgig-sdk-euro-rates
 ```
 
 Or install from source:

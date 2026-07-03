@@ -10,7 +10,7 @@ The TypeScript SDK for the EuroRates API — a type-safe, entity-oriented client
 
 ## Install
 ```bash
-npm install euro-rates
+npm install @voxgig-sdk/euro-rates
 ```
 ## Tutorial: your first API call
 

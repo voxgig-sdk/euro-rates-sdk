@@ -8,12 +8,14 @@ source = {
   dir = "euro-rates-sdk/lua"
 }
 description = {
-  summary = "EuroRates SDK for Lua",
-  license = "MIT"
+  summary = "Unofficial generated Lua SDK for the Exchange Rate public API. Not affiliated with or endorsed by the upstream API provider.",
+  homepage = "https://github.com/voxgig-sdk/euro-rates-sdk",
+  issues_url = "https://github.com/voxgig-sdk/euro-rates-sdk/issues",
+  license = "MIT",
+  labels = { "voxgig", "sdk", "generated-sdk", "openapi", "api-client", "euro-rates" }
 }
 dependencies = {
   "lua >= 5.3",
-  "dkjson >= 2.5",
   "dkjson >= 2.5",
 }
 build = {
