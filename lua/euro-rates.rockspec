@@ -1,7 +1,11 @@
 package = "voxgig-sdk-euro-rates"
-version = "0.0-1"
+version = "0.0.1-1"
 source = {
-  url = "git://github.com/voxgig-sdk/euro-rates-sdk.git"
+  -- git+https (GitHub dropped git:// in 2022); pin the install to the release
+  -- tag pushed by `make publish`, and point at the lua/ subdir of the monorepo.
+  url = "git+https://github.com/voxgig-sdk/euro-rates-sdk.git",
+  tag = "lua/v0.0.1",
+  dir = "euro-rates-sdk/lua"
 }
 description = {
   summary = "EuroRates SDK for Lua",

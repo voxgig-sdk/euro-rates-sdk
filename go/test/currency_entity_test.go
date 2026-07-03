@@ -119,6 +119,7 @@ func currencyBasicSetup(extra map[string]any) *entityTestSetup {
 		"EURORATES_TEST_CURRENCY_ENTID": idmap,
 		"EURORATES_TEST_LIVE":      "FALSE",
 		"EURORATES_TEST_EXPLAIN":   "FALSE",
+		"EURORATES_APIKEY":         "NONE",
 	})
 
 	idmapResolved := core.ToMapAny(env["EURORATES_TEST_CURRENCY_ENTID"])
@@ -129,6 +130,7 @@ func currencyBasicSetup(extra map[string]any) *entityTestSetup {
 	if env["EURORATES_TEST_LIVE"] == "TRUE" {
 		mergedOpts := vs.Merge([]any{
 			map[string]any{
+				"apikey": env["EURORATES_APIKEY"],
 			},
 			extra,
 		})

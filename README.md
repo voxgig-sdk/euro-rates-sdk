@@ -1,20 +1,8 @@
 # EuroRates SDK
 
-Free EUR-centric foreign exchange rates sourced from the European Central Bank
+Exchange Rate API client, generated from the OpenAPI spec.
 
 > TypeScript, Python, PHP, Golang, Ruby, Lua SDKs, a CLI, an interactive REPL, and an MCP server for AI agents — all generated from one OpenAPI spec by [@voxgig/sdkgen](https://github.com/voxgig/sdkgen).
-
-## About Exchange Rate API
-
-[Exchange Rate API](https://api.exchangerate.host) is a REST service that exposes current and historical foreign exchange rates, with rates derived from the [European Central Bank](https://www.ecb.europa.eu/) and other financial data providers. The service is run by [APILayer](https://apilayer.com/).
-
-What you get from the API:
-- Latest exchange rates for EUR against a list of supported currencies
-- Cross-rate lookups starting from a chosen base currency
-- A directory of supported currency symbols
-- Historical end-of-day rates over a date range, with selectable frequency
-
-Operational notes: historical rates are end-of-day values timestamped at 23:59 GMT, with roughly 19 years of history available. The free tier is capped at 100 requests per month, and response headers report current rate-limit usage. The community catalogue at [freepublicapis.com](https://freepublicapis.com/euro-rates-api) notes that CORS is disabled across endpoints.
 
 ## Try it
 
@@ -48,29 +36,31 @@ gem install euro-rates-sdk
 luarocks install euro-rates-sdk
 ```
 
-## 30-second quickstart
+## Quickstart
 
 ### TypeScript
 
 ```ts
 import { EuroRatesSDK } from 'euro-rates'
 
-const client = new EuroRatesSDK({})
+const client = new EuroRatesSDK({
+  apikey: process.env.EURO-RATES_APIKEY,
+})
 
 // List all currencys
 const currencys = await client.Currency().list()
+console.log(currencys.data)
 ```
 
-See the [TypeScript README](ts/README.md) for the
-full guide, or scroll down for the same example in other languages.
+See the [TypeScript README](ts/README.md) for the full guide.
 
-## What's in the box
+## Surfaces
 
-| Surface | Use it for | Path |
-| --- | --- | --- |
-| **SDK** (TypeScript, Python, PHP, Golang, Ruby, Lua) | App integration | `ts/` `py/` `php/` `go/` `rb/` `lua/` |
-| **CLI** | Scripts, CI, ops, one-off API calls | `go-cli/` |
-| **MCP server** | AI agents (Claude, Cursor, Cline) | `go-mcp/` |
+| Surface | Path |
+| --- | --- |
+| **SDK** (TypeScript, Python, PHP, Golang, Ruby, Lua) | `ts/` `py/` `php/` `go/` `rb/` `lua/` |
+| **CLI** | `go-cli/` |
+| **MCP server** | `go-mcp/` |
 
 ## Use it from an AI agent (MCP)
 
@@ -100,8 +90,8 @@ The API exposes 2 entities:
 
 | Entity | Description | API path |
 | --- | --- | --- |
-| **Currency** | A supported currency, typically identified by its ISO 4217 code, used as the base or target of a rate lookup. | `/api/all-currencies` |
-| **ExchangeRate** | A foreign exchange rate quote between two currencies, available either as the latest value or as a historical end-of-day series. | `/api/rates` |
+| **Currency** |  | `/api/all-currencies` |
+| **ExchangeRate** |  | `/api/rates` |
 
 Each entity supports the following operations where available: **load**,
 **list**, **create**, **update**, and **remove**.
@@ -111,12 +101,16 @@ Each entity supports the following operations where available: **load**,
 ### Python
 
 ```python
+import os
 from eurorates_sdk import EuroRatesSDK
 
-client = EuroRatesSDK({})
+client = EuroRatesSDK({
+    "apikey": os.environ.get("EURO-RATES_APIKEY"),
+})
 
 # List all currencys
-currencys, err = client.Currency(None).list(None, None)
+currencys, err = client.Currency().list()
+print(currencys)
 ```
 
 ### PHP
@@ -125,10 +119,13 @@ currencys, err = client.Currency(None).list(None, None)
 <?php
 require_once 'eurorates_sdk.php';
 
-$client = new EuroRatesSDK([]);
+$client = new EuroRatesSDK([
+    "apikey" => getenv("EURO-RATES_APIKEY"),
+]);
 
 // List all currencys
-[$currencys, $err] = $client->Currency(null)->list(null, null);
+[$currencys, $err] = $client->Currency()->list();
+print_r($currencys);
 ```
 
 ### Golang
@@ -136,10 +133,13 @@ $client = new EuroRatesSDK([]);
 ```go
 import sdk "github.com/voxgig-sdk/euro-rates-sdk/go"
 
-client := sdk.NewEuroRatesSDK(map[string]any{})
+client := sdk.NewEuroRatesSDK(map[string]any{
+    "apikey": os.Getenv("EURO-RATES_APIKEY"),
+})
 
 // List all currencys
 currencys, err := client.Currency(nil).List(nil, nil)
+fmt.Println(currencys)
 ```
 
 ### Ruby
@@ -147,10 +147,13 @@ currencys, err := client.Currency(nil).List(nil, nil)
 ```ruby
 require_relative "EuroRates_sdk"
 
-client = EuroRatesSDK.new({})
+client = EuroRatesSDK.new({
+  "apikey" => ENV["EURO-RATES_APIKEY"],
+})
 
 # List all currencys
-currencys, err = client.Currency(nil).list(nil, nil)
+currencys, err = client.Currency().list
+puts currencys
 ```
 
 ### Lua
@@ -158,10 +161,13 @@ currencys, err = client.Currency(nil).list(nil, nil)
 ```lua
 local sdk = require("euro-rates_sdk")
 
-local client = sdk.new({})
+local client = sdk.new({
+  apikey = os.getenv("EURO-RATES_APIKEY"),
+})
 
 -- List all currencys
-local currencys, err = client:Currency(nil):list(nil, nil)
+local currencys, err = client:Currency():list()
+print(currencys)
 ```
 
 ## Unit testing in offline mode
@@ -180,25 +186,21 @@ const result = await client.Currency().load({ id: 'test01' })
 ### Python
 
 ```python
-client = EuroRatesSDK.test(None, None)
-result, err = client.Currency(None).load(
-    {"id": "test01"}, None
-)
+client = EuroRatesSDK.test()
+result, err = client.Currency().load({"id": "test01"})
 ```
 
 ### PHP
 
 ```php
-$client = EuroRatesSDK::test(null, null);
-[$result, $err] = $client->Currency(null)->load(
-    ["id" => "test01"], null
-);
+$client = EuroRatesSDK::test();
+[$result, $err] = $client->Currency()->load(["id" => "test01"]);
 ```
 
 ### Golang
 
 ```go
-client := sdk.TestSDK(nil, nil)
+client := sdk.Test()
 result, err := client.Currency(nil).Load(
     map[string]any{"id": "test01"}, nil,
 )
@@ -207,19 +209,15 @@ result, err := client.Currency(nil).Load(
 ### Ruby
 
 ```ruby
-client = EuroRatesSDK.test(nil, nil)
-result, err = client.Currency(nil).load(
-  { "id" => "test01" }, nil
-)
+client = EuroRatesSDK.test
+result, err = client.Currency().load({ "id" => "test01" })
 ```
 
 ### Lua
 
 ```lua
-local client = sdk.test(nil, nil)
-local result, err = client:Currency(nil):load(
-  { id = "test01" }, nil
-)
+local client = sdk.test()
+local result, err = client:Currency():load({ id = "test01" })
 ```
 
 ## How it works
@@ -323,16 +321,6 @@ local result, err = client:direct({
 - [Golang](go/README.md)
 - [Ruby](rb/README.md)
 - [Lua](lua/README.md)
-
-## Using the Exchange Rate API
-
-- Upstream: [https://api.exchangerate.host](https://api.exchangerate.host)
-- API docs: [https://www.exchangerate.host](https://www.exchangerate.host)
-
-- Operated by [exchangerate.host](https://www.exchangerate.host), an APILayer product.
-- Underlying ECB reference rates are public information from the European Central Bank.
-- No explicit attribution requirement is documented on the catalogue page; review the provider's Terms of Service before redistribution.
-- Usage is subject to the API plan you sign up for (free and paid tiers).
 
 ---
 

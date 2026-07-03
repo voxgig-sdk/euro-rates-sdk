@@ -1,6 +1,11 @@
 # EuroRates Python SDK
 
-The Python SDK for the EuroRates API. Provides an entity-oriented interface following Pythonic conventions.
+
+
+The Python SDK for the EuroRates API — an entity-oriented client following Pythonic conventions.
+
+> Other languages, the CLI, and MCP server live alongside this one — see
+> the [top-level README](../README.md).
 
 
 ## Install
@@ -23,15 +28,18 @@ loading a specific record.
 ### 1. Create a client
 
 ```python
+import os
 from eurorates_sdk import EuroRatesSDK
 
-client = EuroRatesSDK({})
+client = EuroRatesSDK({
+    "apikey": os.environ.get("EURO-RATES_APIKEY"),
+})
 ```
 
 ### 2. List currencys
 
 ```python
-result, err = client.Currency(None).list(None, None)
+result, err = client.Currency().list()
 if err:
     raise Exception(err)
 
@@ -83,11 +91,9 @@ print(fetchdef["headers"])
 Create a mock client for unit testing — no server required:
 
 ```python
-client = EuroRatesSDK.test(None, None)
+client = EuroRatesSDK.test()
 
-result, err = client.EuroRates(None).load(
-    {"id": "test01"}, None
-)
+result, err = client.EuroRates().load({"id": "test01"})
 # result contains mock response data
 ```
 
@@ -118,6 +124,7 @@ Create a `.env.local` file at the project root:
 
 ```
 EURO-RATES_TEST_LIVE=TRUE
+EURO-RATES_APIKEY=<your-key>
 ```
 
 Then run:
@@ -141,6 +148,7 @@ Creates a new SDK client.
 
 | Option | Type | Description |
 | --- | --- | --- |
+| `apikey` | `str` | API key for authentication. |
 | `base` | `str` | Base URL of the API server. |
 | `prefix` | `str` | URL path prefix prepended to all requests. |
 | `suffix` | `str` | URL path suffix appended to all requests. |

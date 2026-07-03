@@ -79,12 +79,14 @@ function directSetup(mockres?: any) {
   const env = envOverride({
     'EURORATES_TEST_EXCHANGE_RATE_ENTID': {},
     'EURORATES_TEST_LIVE': 'FALSE',
+    'EURORATES_APIKEY': 'NONE',
   })
 
   const live = 'TRUE' === env.EURORATES_TEST_LIVE
 
   if (live) {
     const client = new EuroRatesSDK({
+      apikey: env.EURORATES_APIKEY,
     })
 
     let idmap: any = env['EURORATES_TEST_EXCHANGE_RATE_ENTID']
