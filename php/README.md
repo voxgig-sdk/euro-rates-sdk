@@ -9,9 +9,10 @@ The PHP SDK for the EuroRates API — an entity-oriented client using PHP conven
 
 
 ## Install
-```bash
-composer require voxgig-sdk/euro-rates
-```
+This package is not yet published to Packagist. Install it from the
+GitHub release tag (`php/vX.Y.Z`):
+
+- Releases: [https://github.com/voxgig-sdk/euro-rates-sdk/releases](https://github.com/voxgig-sdk/euro-rates-sdk/releases)
 
 
 ## Tutorial: your first API call
@@ -25,22 +26,22 @@ loading a specific record.
 <?php
 require_once 'eurorates_sdk.php';
 
-$client = new EuroRatesSDK([
-    "apikey" => getenv("EURO-RATES_APIKEY"),
-]);
+$client = new EuroRatesSDK();
 ```
 
 ### 2. List currencys
 
 ```php
-[$result, $err] = $client->Currency()->list();
-if ($err) { throw new \Exception($err); }
-
-if (is_array($result)) {
-    foreach ($result as $item) {
-        $d = $item->data_get();
-        echo $d["id"] . " " . $d["name"] . "\n";
+try {
+    $result = $client->currency()->list();
+    if (is_array($result)) {
+        foreach ($result as $item) {
+            $d = $item->data_get();
+            echo $d["id"] . " " . $d["name"] . "\n";
+        }
     }
+} catch (\Exception $err) {
+    echo "Error: " . $err->getMessage();
 }
 ```
 
@@ -52,28 +53,31 @@ if (is_array($result)) {
 For endpoints not covered by entity methods:
 
 ```php
-[$result, $err] = $client->direct([
+// direct() is the raw-HTTP escape hatch: it returns a result array
+// (it does not throw). Branch on $result["ok"].
+$result = $client->direct([
     "path" => "/api/resource/{id}",
     "method" => "GET",
     "params" => ["id" => "example"],
 ]);
-if ($err) { throw new \Exception($err); }
 
 if ($result["ok"]) {
     echo $result["status"];  // 200
     print_r($result["data"]);  // response body
+} else {
+    echo "Error: " . $result["err"]->getMessage();
 }
 ```
 
 ### Prepare a request without sending it
 
 ```php
-[$fetchdef, $err] = $client->prepare([
+// prepare() throws on error and returns the fetch definition.
+$fetchdef = $client->prepare([
     "path" => "/api/resource/{id}",
     "method" => "DELETE",
     "params" => ["id" => "example"],
 ]);
-if ($err) { throw new \Exception($err); }
 
 echo $fetchdef["url"];
 echo $fetchdef["method"];
@@ -87,7 +91,7 @@ Create a mock client for unit testing — no server required:
 ```php
 $client = EuroRatesSDK::test();
 
-[$result, $err] = $client->EuroRates()->load(["id" => "test01"]);
+$result = $client->currency()->load(["id" => "test01"]);
 // $result contains mock response data
 ```
 
@@ -121,8 +125,7 @@ $client = new EuroRatesSDK([
 Create a `.env.local` file at the project root:
 
 ```
-EURO-RATES_TEST_LIVE=TRUE
-EURO-RATES_APIKEY=<your-key>
+EURO_RATES_TEST_LIVE=TRUE
 ```
 
 Then run:
@@ -145,7 +148,6 @@ Creates a new SDK client.
 
 | Option | Type | Description |
 | --- | --- | --- |
-| `apikey` | `string` | API key for authentication. |
 | `base` | `string` | Base URL of the API server. |
 | `prefix` | `string` | URL path prefix prepended to all requests. |
 | `suffix` | `string` | URL path suffix appended to all requests. |
@@ -192,8 +194,12 @@ All entities share the same interface.
 
 ### Result shape
 
-Entity operations return `[$result, $err]`. The first value is an
-`array` with these keys:
+Entity operations return the bare result data (an `array` for single-entity
+ops, a `list` for `list`) and throw on error. Wrap calls in
+`try`/`catch` to handle failures.
+
+The `direct()` escape hatch never throws — it returns a result `array`
+you branch on via `$result["ok"]`:
 
 | Key | Type | Description |
 | --- | --- | --- |
@@ -233,7 +239,7 @@ API path: `/api/rates`
 
 ### Currency
 
-Create an instance: `const currency = client.Currency()`
+Create an instance: `const currency = client.currency`
 
 #### Operations
 
@@ -251,13 +257,13 @@ Create an instance: `const currency = client.Currency()`
 #### Example: List
 
 ```ts
-const currencys = await client.Currency().list()
+const currencys = await client.currency.list()
 ```
 
 
 ### ExchangeRate
 
-Create an instance: `const exchange_rate = client.ExchangeRate()`
+Create an instance: `const exchange_rate = client.exchange_rate`
 
 #### Operations
 
@@ -268,7 +274,7 @@ Create an instance: `const exchange_rate = client.ExchangeRate()`
 #### Example: Load
 
 ```ts
-const exchange_rate = await client.ExchangeRate().load({ id: 'exchange_rate_id' })
+const exchange_rate = await client.exchange_rate.load({ id: 'exchange_rate_id' })
 ```
 
 
@@ -343,11 +349,11 @@ Entity instances are stateful. After a successful `load`, the entity
 stores the returned data and match criteria internally.
 
 ```php
-$moon = $client->Moon();
-[$result, $err] = $moon->load(["planet_id" => "earth", "id" => "luna"]);
+$currency = $client->currency();
+$currency->load(["id" => "example_id"]);
 
-// $moon->dataGet() now returns the loaded moon data
-// $moon->matchGet() returns the last match criteria
+// $currency->dataGet() now returns the loaded currency data
+// $currency->matchGet() returns the last match criteria
 ```
 
 Call `make()` to create a fresh instance with the same configuration

@@ -245,11 +245,17 @@ func (sdk *EuroRatesSDK) Direct(fetchargs map[string]any) (map[string]any, error
 }
 
 
+// Currency returns a Currency entity bound to this client.
+// Idiomatic usage: client.Currency(nil).List(nil, nil) or
+// client.Currency(nil).Load(map[string]any{"id": ...}, nil).
 func (sdk *EuroRatesSDK) Currency(data map[string]any) EuroRatesEntity {
 	return NewCurrencyEntityFunc(sdk, data)
 }
 
 
+// ExchangeRate returns a ExchangeRate entity bound to this client.
+// Idiomatic usage: client.ExchangeRate(nil).List(nil, nil) or
+// client.ExchangeRate(nil).Load(map[string]any{"id": ...}, nil).
 func (sdk *EuroRatesSDK) ExchangeRate(data map[string]any) EuroRatesEntity {
 	return NewExchangeRateEntityFunc(sdk, data)
 }

@@ -15,9 +15,6 @@ module EuroRatesConfig
       },
       "options" => {
         "base" => "https://api.exchangerate.host",
-        "auth" => {
-          "prefix" => "Bearer",
-        },
         "headers" => {
           "content-type" => "application/json",
         },

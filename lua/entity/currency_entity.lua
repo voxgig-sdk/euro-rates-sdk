@@ -81,6 +81,10 @@ end
 
 
 
+---@param reqmatch CurrencyListMatch
+---@param ctrl? table
+---@return Currency[]
+---@return string? err
 function CurrencyEntity:list(reqmatch, ctrl)
   local utility = self._utility
   local ctx = utility.make_context({

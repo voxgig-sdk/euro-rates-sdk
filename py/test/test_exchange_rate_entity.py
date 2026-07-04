@@ -49,8 +49,7 @@ class TestExchangeRateEntity:
         # LOAD
         exchange_rate_ref01_ent = client.ExchangeRate(None)
         exchange_rate_ref01_match_dt0 = {}
-        exchange_rate_ref01_data_dt0_loaded, err = exchange_rate_ref01_ent.load(exchange_rate_ref01_match_dt0, None)
-        assert err is None
+        exchange_rate_ref01_data_dt0_loaded = exchange_rate_ref01_ent.load(exchange_rate_ref01_match_dt0, None)
         assert exchange_rate_ref01_data_dt0_loaded is not None
 
 
@@ -91,7 +90,6 @@ def _exchange_rate_basic_setup(extra):
         "EURORATES_TEST_EXCHANGE_RATE_ENTID": idmap,
         "EURORATES_TEST_LIVE": "FALSE",
         "EURORATES_TEST_EXPLAIN": "FALSE",
-        "EURORATES_APIKEY": "NONE",
     })
 
     idmap_resolved = helpers.to_map(
@@ -102,7 +100,6 @@ def _exchange_rate_basic_setup(extra):
     if env.get("EURORATES_TEST_LIVE") == "TRUE":
         merged_opts = vs.merge([
             {
-                "apikey": env.get("EURORATES_APIKEY"),
             },
             extra or {},
         ])

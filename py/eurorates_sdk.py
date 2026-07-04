@@ -144,16 +144,23 @@ class EuroRatesSDK:
 
         _, err = utility.prepare_auth(ctx)
         if err is not None:
-            return None, err
+            raise err
 
-        return utility.make_fetch_def(ctx)
+        fetchdef, err = utility.make_fetch_def(ctx)
+        if err is not None:
+            raise err
+
+        return fetchdef
 
     def direct(self, fetchargs=None):
         utility = self._utility
 
-        fetchdef, err = self.prepare(fetchargs)
-        if err is not None:
-            return {"ok": False, "err": err}, None
+        try:
+            fetchdef = self.prepare(fetchargs)
+        except Exception as err:
+            # direct() is the raw-HTTP escape hatch: it never raises, it
+            # returns a result object callers branch on via result["ok"].
+            return {"ok": False, "err": err}
 
         if fetchargs is None:
             fetchargs = {}
@@ -170,13 +177,13 @@ class EuroRatesSDK:
         fetched, fetch_err = utility.fetcher(ctx, url, fetchdef)
 
         if fetch_err is not None:
-            return {"ok": False, "err": fetch_err}, None
+            return {"ok": False, "err": fetch_err}
 
         if fetched is None:
             return {
                 "ok": False,
                 "err": ctx.make_error("direct_no_response", "response: undefined"),
-            }, None
+            }
 
         if isinstance(fetched, dict):
             status = helpers.to_int(vs.getprop(fetched, "status"))
@@ -205,20 +212,42 @@ class EuroRatesSDK:
                 "status": status,
                 "headers": headers,
                 "data": json_data,
-            }, None
+            }
 
         return {
             "ok": False,
             "err": ctx.make_error("direct_invalid", "invalid response type"),
-        }, None
+        }
 
+
+    @property
+    def currency(self):
+        """Idiomatic facade: client.currency.list() / client.currency.load({"id": ...})."""
+        from entity.currency_entity import CurrencyEntity
+        cached = getattr(self, "_currency", None)
+        if cached is None:
+            cached = CurrencyEntity(self, None)
+            self._currency = cached
+        return cached
 
     def Currency(self, data=None):
+        # Deprecated: use client.currency instead.
         from entity.currency_entity import CurrencyEntity
         return CurrencyEntity(self, data)
 
 
+    @property
+    def exchange_rate(self):
+        """Idiomatic facade: client.exchange_rate.list() / client.exchange_rate.load({"id": ...})."""
+        from entity.exchange_rate_entity import ExchangeRateEntity
+        cached = getattr(self, "_exchange_rate", None)
+        if cached is None:
+            cached = ExchangeRateEntity(self, None)
+            self._exchange_rate = cached
+        return cached
+
     def ExchangeRate(self, data=None):
+        # Deprecated: use client.exchange_rate instead.
         from entity.exchange_rate_entity import ExchangeRateEntity
         return ExchangeRateEntity(self, data)
 

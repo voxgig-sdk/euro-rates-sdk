@@ -79,6 +79,10 @@ end
 
 
 
+---@param reqmatch ExchangeRateLoadMatch
+---@param ctrl? table
+---@return ExchangeRate
+---@return string? err
 function ExchangeRateEntity:load(reqmatch, ctrl)
   local utility = self._utility
   local ctx = utility.make_context({

@@ -38,10 +38,6 @@ class Config {
   options = {
     base: 'https://api.exchangerate.host',
 
-    auth: {
-      prefix: 'Bearer',
-    },
-
     headers: {
       "content-type": "application/json"
     },

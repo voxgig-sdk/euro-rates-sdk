@@ -244,12 +244,38 @@ end
 
 
 
+-- Idiomatic facade: client:currency():list() / client:currency():load({ id = ... })
+function EuroRatesSDK:currency(data)
+  local EntityMod = require("entity.currency_entity")
+  if data == nil then
+    if self._currency == nil then
+      self._currency = EntityMod.new(self, nil)
+    end
+    return self._currency
+  end
+  return EntityMod.new(self, data)
+end
+
+-- Deprecated: use client:currency() instead.
 function EuroRatesSDK:Currency(data)
   local EntityMod = require("entity.currency_entity")
   return EntityMod.new(self, data)
 end
 
 
+-- Idiomatic facade: client:exchange_rate():list() / client:exchange_rate():load({ id = ... })
+function EuroRatesSDK:exchange_rate(data)
+  local EntityMod = require("entity.exchange_rate_entity")
+  if data == nil then
+    if self._exchange_rate == nil then
+      self._exchange_rate = EntityMod.new(self, nil)
+    end
+    return self._exchange_rate
+  end
+  return EntityMod.new(self, data)
+end
+
+-- Deprecated: use client:exchange_rate() instead.
 function EuroRatesSDK:ExchangeRate(data)
   local EntityMod = require("entity.exchange_rate_entity")
   return EntityMod.new(self, data)

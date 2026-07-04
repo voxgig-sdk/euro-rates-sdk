@@ -4,6 +4,7 @@
 main: {
   kit: {
     info: {
+      auth: false
       description: "Free API connect to https://www.ecb.europa.eu"
       servers: [
         {

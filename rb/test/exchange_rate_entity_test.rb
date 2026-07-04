@@ -42,8 +42,7 @@ class ExchangeRateEntityTest < Minitest::Test
     # LOAD
     exchange_rate_ref01_ent = client.ExchangeRate(nil)
     exchange_rate_ref01_match_dt0 = {}
-    exchange_rate_ref01_data_dt0_loaded, err = exchange_rate_ref01_ent.load(exchange_rate_ref01_match_dt0, nil)
-    assert_nil err
+    exchange_rate_ref01_data_dt0_loaded = exchange_rate_ref01_ent.load(exchange_rate_ref01_match_dt0, nil)
     assert !exchange_rate_ref01_data_dt0_loaded.nil?
 
   end
@@ -82,7 +81,6 @@ def exchange_rate_basic_setup(extra)
     "EURORATES_TEST_EXCHANGE_RATE_ENTID" => idmap,
     "EURORATES_TEST_LIVE" => "FALSE",
     "EURORATES_TEST_EXPLAIN" => "FALSE",
-    "EURORATES_APIKEY" => "NONE",
   })
 
   idmap_resolved = Helpers.to_map(
@@ -94,7 +92,6 @@ def exchange_rate_basic_setup(extra)
   if env["EURORATES_TEST_LIVE"] == "TRUE"
     merged_opts = Vs.merge([
       {
-        "apikey" => env["EURORATES_APIKEY"],
       },
       extra || {},
     ])

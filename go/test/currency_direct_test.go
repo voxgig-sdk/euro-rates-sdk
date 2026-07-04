@@ -93,14 +93,12 @@ func currencyDirectSetup(mockres any) *currencyDirectSetupResult {
 	env := envOverride(map[string]any{
 		"EURORATES_TEST_CURRENCY_ENTID": map[string]any{},
 		"EURORATES_TEST_LIVE":    "FALSE",
-		"EURORATES_APIKEY":       "NONE",
 	})
 
 	live := env["EURORATES_TEST_LIVE"] == "TRUE"
 
 	if live {
 		mergedOpts := map[string]any{
-			"apikey": env["EURORATES_APIKEY"],
 		}
 		client := sdk.NewEuroRatesSDK(mergedOpts)
 

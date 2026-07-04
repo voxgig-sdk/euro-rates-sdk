@@ -19,7 +19,6 @@ Create a new SDK client instance.
 | Name | Type | Description |
 | --- | --- | --- |
 | `options` | `table` | SDK configuration options. |
-| `options.apikey` | `string` | API key for authentication. |
 | `options.base` | `string` | Base URL for API requests. |
 | `options.prefix` | `string` | URL prefix appended after base. |
 | `options.suffix` | `string` | URL suffix appended after path. |
@@ -88,7 +87,7 @@ same parameters as `direct()`.
 ## CurrencyEntity
 
 ```lua
-local currency = client:Currency(nil)
+local currency = client:currency(nil)
 ```
 
 ### Fields
@@ -105,7 +104,7 @@ local currency = client:Currency(nil)
 List entities matching the given criteria. Returns an array.
 
 ```lua
-local results, err = client:Currency():list()
+local results, err = client:currency():list()
 ```
 
 ### Common Methods
@@ -141,7 +140,7 @@ Return the entity name.
 ## ExchangeRateEntity
 
 ```lua
-local exchange_rate = client:ExchangeRate(nil)
+local exchange_rate = client:exchange_rate(nil)
 ```
 
 ### Operations
@@ -151,7 +150,7 @@ local exchange_rate = client:ExchangeRate(nil)
 Load a single entity matching the given criteria.
 
 ```lua
-local result, err = client:ExchangeRate():load({ id = "exchange_rate_id" })
+local result, err = client:exchange_rate():load({ id = "exchange_rate_id" })
 ```
 
 ### Common Methods

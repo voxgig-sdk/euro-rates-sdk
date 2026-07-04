@@ -50,8 +50,7 @@ class CurrencyEntityTest extends TestCase
         $currency_ref01_ent = $client->Currency(null);
         $currency_ref01_match = [];
 
-        [$currency_ref01_list_result, $err] = $currency_ref01_ent->list($currency_ref01_match, null);
-        $this->assertNull($err);
+        $currency_ref01_list_result = $currency_ref01_ent->list($currency_ref01_match, null);
         $this->assertIsArray($currency_ref01_list_result);
 
     }
@@ -86,7 +85,6 @@ function currency_basic_setup($extra)
         "EURORATES_TEST_CURRENCY_ENTID" => $idmap,
         "EURORATES_TEST_LIVE" => "FALSE",
         "EURORATES_TEST_EXPLAIN" => "FALSE",
-        "EURORATES_APIKEY" => "NONE",
     ]);
 
     $idmap_resolved = Helpers::to_map(
@@ -98,7 +96,6 @@ function currency_basic_setup($extra)
     if ($env["EURORATES_TEST_LIVE"] === "TRUE") {
         $merged_opts = Vs::merge([
             [
-                "apikey" => $env["EURORATES_APIKEY"],
             ],
             $extra ?? [],
         ]);

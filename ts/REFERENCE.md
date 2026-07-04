@@ -18,7 +18,6 @@ Create a new SDK client instance.
 | Name | Type | Description |
 | --- | --- | --- |
 | `options` | `object` | SDK configuration options. |
-| `options.apikey` | `string` | API key for authentication. |
 | `options.base` | `string` | Base URL for API requests. |
 | `options.prefix` | `string` | URL prefix appended after base. |
 | `options.suffix` | `string` | URL suffix appended after path. |
@@ -122,7 +121,7 @@ Alias for `EuroRatesSDK.test()`.
 ## CurrencyEntity
 
 ```ts
-const currency = client.Currency()
+const currency = client.currency
 ```
 
 ### Fields
@@ -139,7 +138,7 @@ const currency = client.Currency()
 List entities matching the given criteria. Returns an array.
 
 ```ts
-const results = await client.Currency().list()
+const results = await client.currency.list()
 ```
 
 ### Common Methods
@@ -173,7 +172,7 @@ Return a copy of the entity options.
 ## ExchangeRateEntity
 
 ```ts
-const exchange_rate = client.ExchangeRate()
+const exchange_rate = client.exchange_rate
 ```
 
 ### Operations
@@ -183,7 +182,7 @@ const exchange_rate = client.ExchangeRate()
 Load a single entity matching the given criteria.
 
 ```ts
-const result = await client.ExchangeRate().load({ id: 'exchange_rate_id' })
+const result = await client.exchange_rate.load({ id: 'exchange_rate_id' })
 ```
 
 ### Common Methods

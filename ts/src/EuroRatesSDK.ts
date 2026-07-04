@@ -3,6 +3,8 @@
 import { CurrencyEntity } from './entity/CurrencyEntity'
 import { ExchangeRateEntity } from './entity/ExchangeRateEntity'
 
+export type * from './EuroRatesTypes'
+
 
 import { inspect } from 'node:util'
 
@@ -203,12 +205,28 @@ class EuroRatesSDK {
 
 
 
+  _currency?: CurrencyEntity
+
+  // Idiomatic facade: `client.currency.list()` / `client.currency.load({ id })`.
+  get currency(): CurrencyEntity {
+    return (this._currency ??= new CurrencyEntity(this, undefined))
+  }
+
+  /** @deprecated Use `client.currency` instead. */
   Currency(data?: any) {
     const self = this
     return new CurrencyEntity(self,data)
   }
 
 
+  _exchange_rate?: ExchangeRateEntity
+
+  // Idiomatic facade: `client.exchange_rate.list()` / `client.exchange_rate.load({ id })`.
+  get exchange_rate(): ExchangeRateEntity {
+    return (this._exchange_rate ??= new ExchangeRateEntity(this, undefined))
+  }
+
+  /** @deprecated Use `client.exchange_rate` instead. */
   ExchangeRate(data?: any) {
     const self = this
     return new ExchangeRateEntity(self,data)

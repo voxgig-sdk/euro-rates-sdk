@@ -113,7 +113,6 @@ function basicSetup(extra?: any) {
     'EURO_RATES_TEST_CURRENCY_ENTID': idmap,
     'EURO_RATES_TEST_LIVE': 'FALSE',
     'EURO_RATES_TEST_EXPLAIN': 'FALSE',
-    'EURO_RATES_APIKEY': 'NONE',
   })
 
   idmap = env['EURO_RATES_TEST_CURRENCY_ENTID']
@@ -123,7 +122,6 @@ function basicSetup(extra?: any) {
   if (live) {
     client = new EuroRatesSDK(merge([
       {
-        apikey: env.EURO_RATES_APIKEY,
       },
       extra
     ]))
