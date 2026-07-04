@@ -220,41 +220,21 @@ class EuroRatesSDK:
         }
 
 
-    @property
-    def currency(self):
-        """Idiomatic facade: client.currency.list() / client.currency.load({"id": ...})."""
-        from entity.currency_entity import CurrencyEntity
-        cached = getattr(self, "_currency", None)
-        if cached is None:
-            cached = CurrencyEntity(self, None)
-            self._currency = cached
-        return cached
-
-    def Currency(self, data=None):
-        # Deprecated: use client.currency instead.
+    def Currency(self, data=None) -> "CurrencyEntity":
+        """Entity factory: client.Currency().list({}) / client.Currency().load({"id": ...})."""
         from entity.currency_entity import CurrencyEntity
         return CurrencyEntity(self, data)
 
 
-    @property
-    def exchange_rate(self):
-        """Idiomatic facade: client.exchange_rate.list() / client.exchange_rate.load({"id": ...})."""
-        from entity.exchange_rate_entity import ExchangeRateEntity
-        cached = getattr(self, "_exchange_rate", None)
-        if cached is None:
-            cached = ExchangeRateEntity(self, None)
-            self._exchange_rate = cached
-        return cached
-
-    def ExchangeRate(self, data=None):
-        # Deprecated: use client.exchange_rate instead.
+    def ExchangeRate(self, data=None) -> "ExchangeRateEntity":
+        """Entity factory: client.ExchangeRate().list({}) / client.ExchangeRate().load({"id": ...})."""
         from entity.exchange_rate_entity import ExchangeRateEntity
         return ExchangeRateEntity(self, data)
 
 
 
     @classmethod
-    def test(cls, testopts=None, sdkopts=None):
+    def test(cls, testopts=None, sdkopts=None) -> "EuroRatesSDK":
         if sdkopts is None:
             sdkopts = {}
         sdkopts = vs.clone(sdkopts)
@@ -274,3 +254,10 @@ class EuroRatesSDK:
         sdk.mode = "test"
 
         return sdk
+
+
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from entity.currency_entity import CurrencyEntity
+    from entity.exchange_rate_entity import ExchangeRateEntity

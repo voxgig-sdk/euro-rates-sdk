@@ -84,7 +84,7 @@ Prepare a fetch definition without sending. Returns the `fetchdef` and raises on
 ## CurrencyEntity
 
 ```python
-currency = client.currency
+currency = client.Currency()
 ```
 
 ### Fields
@@ -101,7 +101,9 @@ currency = client.currency
 List entities matching the given criteria. Returns a list and raises on error.
 
 ```python
-results = client.currency.list({})
+results = client.Currency().list({})
+for currency in results:
+    print(currency)
 ```
 
 ### Common Methods
@@ -136,7 +138,7 @@ Return the entity name.
 ## ExchangeRateEntity
 
 ```python
-exchange_rate = client.exchange_rate
+exchange_rate = client.ExchangeRate()
 ```
 
 ### Operations
@@ -146,7 +148,7 @@ exchange_rate = client.exchange_rate
 Load a single entity matching the given criteria. Returns the entity data and raises on error.
 
 ```python
-result = client.exchange_rate.load({"id": "exchange_rate_id"})
+result = client.ExchangeRate().load({"id": "exchange_rate_id"})
 ```
 
 ### Common Methods

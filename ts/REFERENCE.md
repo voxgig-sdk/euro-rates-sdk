@@ -121,7 +121,7 @@ Alias for `EuroRatesSDK.test()`.
 ## CurrencyEntity
 
 ```ts
-const currency = client.currency
+const currency = client.Currency()
 ```
 
 ### Fields
@@ -138,7 +138,7 @@ const currency = client.currency
 List entities matching the given criteria. Returns an array.
 
 ```ts
-const results = await client.currency.list()
+const results = await client.Currency().list()
 ```
 
 ### Common Methods
@@ -172,7 +172,7 @@ Return a copy of the entity options.
 ## ExchangeRateEntity
 
 ```ts
-const exchange_rate = client.exchange_rate
+const exchange_rate = client.ExchangeRate()
 ```
 
 ### Operations
@@ -182,7 +182,7 @@ const exchange_rate = client.exchange_rate
 Load a single entity matching the given criteria.
 
 ```ts
-const result = await client.exchange_rate.load({ id: 'exchange_rate_id' })
+const result = await client.ExchangeRate().load({ id: 'exchange_rate_id' })
 ```
 
 ### Common Methods

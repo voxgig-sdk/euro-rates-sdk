@@ -208,26 +208,14 @@ class EuroRatesSDK
   end
 
 
-  # Idiomatic facade: client.currency.list / client.currency.load({ "id" => ... })
-  def currency
-    require_relative 'entity/currency_entity'
-    @currency ||= CurrencyEntity.new(self, nil)
-  end
-
-  # Deprecated: use client.currency instead.
+  # Canonical facade: client.Currency.list / client.Currency.load({ "id" => ... })
   def Currency(data = nil)
     require_relative 'entity/currency_entity'
     CurrencyEntity.new(self, data)
   end
 
 
-  # Idiomatic facade: client.exchange_rate.list / client.exchange_rate.load({ "id" => ... })
-  def exchange_rate
-    require_relative 'entity/exchange_rate_entity'
-    @exchange_rate ||= ExchangeRateEntity.new(self, nil)
-  end
-
-  # Deprecated: use client.exchange_rate instead.
+  # Canonical facade: client.ExchangeRate.list / client.ExchangeRate.load({ "id" => ... })
   def ExchangeRate(data = nil)
     require_relative 'entity/exchange_rate_entity'
     ExchangeRateEntity.new(self, data)

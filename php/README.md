@@ -29,18 +29,16 @@ require_once 'eurorates_sdk.php';
 $client = new EuroRatesSDK();
 ```
 
-### 2. List currencys
+### 2. List currency records
 
 ```php
 try {
-    $result = $client->currency()->list();
-    if (is_array($result)) {
-        foreach ($result as $item) {
-            $d = $item->data_get();
-            echo $d["id"] . " " . $d["name"] . "\n";
-        }
+    // list() returns an array of Currency records — iterate directly.
+    $currencys = $client->Currency()->list();
+    foreach ($currencys as $item) {
+        echo $item["id"] . " " . $item["name"] . "\n";
     }
-} catch (\Exception $err) {
+} catch (\Throwable $err) {
     echo "Error: " . $err->getMessage();
 }
 ```
@@ -86,13 +84,17 @@ print_r($fetchdef["headers"]);
 
 ### Use test mode
 
-Create a mock client for unit testing — no server required:
+Create a mock client for unit testing — no server required. Seed fixture
+data via the `entity` option so offline calls resolve without a live server:
 
 ```php
-$client = EuroRatesSDK::test();
+$client = EuroRatesSDK::test([
+    "entity" => ["currency" => ["test01" => ["id" => "test01"]]],
+]);
 
-$result = $client->currency()->load(["id" => "test01"]);
-// $result contains mock response data
+// load() returns the bare mock record (throws on error).
+$currency = $client->Currency()->load(["id" => "test01"]);
+print_r($currency);
 ```
 
 ### Use a custom fetch function
@@ -172,7 +174,7 @@ Creates a test-mode client with mock transport. Both arguments may be `null`.
 | `prepare` | `(array $fetchargs): array` | Build an HTTP request definition without sending. |
 | `direct` | `(array $fetchargs): array` | Build and send an HTTP request. |
 | `Currency` | `($data): CurrencyEntity` | Create a Currency entity instance. |
-| `ExchangeRate` | `($data): ExchangeRateEntity` | Create a ExchangeRate entity instance. |
+| `ExchangeRate` | `($data): ExchangeRateEntity` | Create an ExchangeRate entity instance. |
 
 ### Entity interface
 
@@ -239,7 +241,7 @@ API path: `/api/rates`
 
 ### Currency
 
-Create an instance: `const currency = client.currency`
+Create an instance: `$currency = $client->Currency();`
 
 #### Operations
 
@@ -256,14 +258,15 @@ Create an instance: `const currency = client.currency`
 
 #### Example: List
 
-```ts
-const currencys = await client.currency.list()
+```php
+// list() returns an array of Currency records (throws on error).
+$currencys = $client->Currency()->list();
 ```
 
 
 ### ExchangeRate
 
-Create an instance: `const exchange_rate = client.exchange_rate`
+Create an instance: `$exchange_rate = $client->ExchangeRate();`
 
 #### Operations
 
@@ -273,8 +276,9 @@ Create an instance: `const exchange_rate = client.exchange_rate`
 
 #### Example: Load
 
-```ts
-const exchange_rate = await client.exchange_rate.load({ id: 'exchange_rate_id' })
+```php
+// load() returns the bare ExchangeRate record (throws on error).
+$exchange_rate = $client->ExchangeRate()->load(["id" => "exchange_rate_id"]);
 ```
 
 
@@ -349,7 +353,7 @@ Entity instances are stateful. After a successful `load`, the entity
 stores the returned data and match criteria internally.
 
 ```php
-$currency = $client->currency();
+$currency = $client->Currency();
 $currency->load(["id" => "example_id"]);
 
 // $currency->dataGet() now returns the loaded currency data

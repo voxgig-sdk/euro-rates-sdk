@@ -233,10 +233,10 @@ class EuroRatesSDK
 
     private $_currency = null;
 
-    // Idiomatic facade: $client->currency()->list() / ->load(["id" => ...]).
-    // Also serves the deprecated PascalCase alias Currency() (PHP method
-    // names are case-insensitive).
-    public function currency($data = null)
+    // Canonical facade: $client->Currency()->list() / ->load(["id" => ...]).
+    // PHP method names are case-insensitive, so lowercase $client->currency()
+    // resolves here too.
+    public function Currency($data = null)
     {
         require_once __DIR__ . '/entity/currency_entity.php';
         if ($data === null) {
@@ -251,10 +251,10 @@ class EuroRatesSDK
 
     private $_exchange_rate = null;
 
-    // Idiomatic facade: $client->exchange_rate()->list() / ->load(["id" => ...]).
-    // Also serves the deprecated PascalCase alias ExchangeRate() (PHP method
-    // names are case-insensitive).
-    public function exchange_rate($data = null)
+    // Canonical facade: $client->ExchangeRate()->list() / ->load(["id" => ...]).
+    // PHP method names are case-insensitive, so lowercase $client->exchange_rate()
+    // resolves here too.
+    public function ExchangeRate($data = null)
     {
         require_once __DIR__ . '/entity/exchange_rate_entity.php';
         if ($data === null) {

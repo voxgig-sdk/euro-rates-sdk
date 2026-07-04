@@ -90,7 +90,7 @@ same parameters as `direct()`. Raises on error.
 ## CurrencyEntity
 
 ```ruby
-currency = client.currency
+currency = client.Currency
 ```
 
 ### Fields
@@ -107,7 +107,7 @@ currency = client.currency
 List entities matching the given criteria. Returns an array. Raises on error.
 
 ```ruby
-results = client.currency.list(nil)
+results = client.Currency.list(nil)
 ```
 
 ### Common Methods
@@ -143,7 +143,7 @@ Return the entity name.
 ## ExchangeRateEntity
 
 ```ruby
-exchange_rate = client.exchange_rate
+exchange_rate = client.ExchangeRate
 ```
 
 ### Operations
@@ -153,7 +153,7 @@ exchange_rate = client.exchange_rate
 Load a single entity matching the given criteria. Raises on error.
 
 ```ruby
-result = client.exchange_rate.load({ "id" => "exchange_rate_id" })
+result = client.ExchangeRate.load({ "id" => "exchange_rate_id" })
 ```
 
 ### Common Methods

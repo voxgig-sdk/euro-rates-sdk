@@ -28,16 +28,14 @@ require_relative "EuroRates_sdk"
 client = EuroRatesSDK.new
 ```
 
-### 2. List currencys
+### 2. List currency records
 
 ```ruby
 begin
-  result = client.currency.list
-  if result.is_a?(Array)
-    result.each do |item|
-      d = item.data_get
-      puts "#{d["id"]} #{d["name"]}"
-    end
+  # list returns an Array of Currency records — iterate directly.
+  currencys = client.Currency.list
+  currencys.each do |item|
+    puts "#{item["id"]} #{item["name"]}"
   end
 rescue => err
   warn "list failed: #{err}"
@@ -85,13 +83,17 @@ end
 
 ### Use test mode
 
-Create a mock client for unit testing — no server required:
+Create a mock client for unit testing — no server required. Seed fixture
+data via the `entity` option so offline calls resolve without a live server:
 
 ```ruby
-client = EuroRatesSDK.test
+client = EuroRatesSDK.test({
+  "entity" => { "currency" => { "test01" => { "id" => "test01" } } },
+})
 
-result = client.currency.load({ "id" => "test01" })
-# result contains mock response data
+# load returns the bare mock record (raises on error).
+currency = client.Currency.load({ "id" => "test01" })
+puts currency
 ```
 
 ### Use a custom fetch function
@@ -168,7 +170,7 @@ Creates a test-mode client with mock transport. Both arguments may be `nil`.
 | `prepare` | `(fetchargs) -> Hash` | Build an HTTP request definition without sending. Raises on error. |
 | `direct` | `(fetchargs) -> Hash` | Build and send an HTTP request. Returns a result hash (`result["ok"]`); does not raise. |
 | `Currency` | `(data) -> CurrencyEntity` | Create a Currency entity instance. |
-| `ExchangeRate` | `(data) -> ExchangeRateEntity` | Create a ExchangeRate entity instance. |
+| `ExchangeRate` | `(data) -> ExchangeRateEntity` | Create an ExchangeRate entity instance. |
 
 ### Entity interface
 
@@ -234,7 +236,7 @@ API path: `/api/rates`
 
 ### Currency
 
-Create an instance: `const currency = client.currency`
+Create an instance: `currency = client.Currency`
 
 #### Operations
 
@@ -251,14 +253,15 @@ Create an instance: `const currency = client.currency`
 
 #### Example: List
 
-```ts
-const currencys = await client.currency.list()
+```ruby
+# list returns an Array of Currency records (raises on error).
+currencys = client.Currency.list
 ```
 
 
 ### ExchangeRate
 
-Create an instance: `const exchange_rate = client.exchange_rate`
+Create an instance: `exchange_rate = client.ExchangeRate`
 
 #### Operations
 
@@ -268,8 +271,9 @@ Create an instance: `const exchange_rate = client.exchange_rate`
 
 #### Example: Load
 
-```ts
-const exchange_rate = await client.exchange_rate.load({ id: 'exchange_rate_id' })
+```ruby
+# load returns the bare ExchangeRate record (raises on error).
+exchange_rate = client.ExchangeRate.load({ "id" => "exchange_rate_id" })
 ```
 
 
@@ -344,7 +348,7 @@ Entity instances are stateful. After a successful `load`, the entity
 stores the returned data and match criteria internally.
 
 ```ruby
-currency = client.currency
+currency = client.Currency
 currency.load({ "id" => "example_id" })
 
 # currency.data_get now returns the loaded currency data

@@ -28,15 +28,15 @@ import { EuroRatesSDK } from '@voxgig-sdk/euro-rates'
 const client = new EuroRatesSDK()
 ```
 
-### 2. List currencys
+### 2. List currency records
+
+`list()` resolves to an array of Currency objects — iterate it directly:
 
 ```ts
-const result = await client.currency.list()
+const currencys = await client.Currency().list()
 
-if (result.ok) {
-  for (const item of result.data) {
-    console.log(item.id, item.name)
-  }
+for (const currency of currencys) {
+  console.log(currency)
 }
 ```
 
@@ -54,6 +54,9 @@ const result = await client.direct({
   params: { id: 'example' },
 })
 
+if (result instanceof Error) {
+  throw result
+}
 if (result.ok) {
   console.log(result.status)  // 200
   console.log(result.data)    // response body
@@ -82,9 +85,9 @@ Create a mock client for unit testing — no server required:
 ```ts
 const client = EuroRatesSDK.test()
 
-const result = await client.currency.load({ id: 'test01' })
-// result.ok === true
-// result.data contains mock response data
+const currency = await client.Currency().load({ id: 'test01' })
+// currency is a bare entity populated with mock response data
+console.log(currency)
 ```
 
 You can also use the instance method:
@@ -99,7 +102,7 @@ const testClient = client.tester()
 Entity instances remember their last match and data:
 
 ```ts
-const entity = client.currency
+const entity = client.Currency()
 
 // First call sets internal match
 await entity.load({ id: 'example' })
@@ -178,7 +181,7 @@ new EuroRatesSDK(options?: {
 | `prepare(fetchargs?)` | `Promise<FetchDef>` | Build an HTTP request definition without sending it. |
 | `direct(fetchargs?)` | `Promise<DirectResult>` | Build and send an HTTP request. |
 | `Currency(data?)` | `CurrencyEntity` | Create a Currency entity instance. |
-| `ExchangeRate(data?)` | `ExchangeRateEntity` | Create a ExchangeRate entity instance. |
+| `ExchangeRate(data?)` | `ExchangeRateEntity` | Create an ExchangeRate entity instance. |
 | `tester(testopts?, sdkopts?)` | `EuroRatesSDK` | Create a test-mode client instance. |
 
 #### Static methods
@@ -195,29 +198,30 @@ All entities share the same interface.
 
 | Method | Signature | Description |
 | --- | --- | --- |
-| `load` | `load(reqmatch?, ctrl?): Promise<Result>` | Load a single entity by match criteria. |
-| `list` | `list(reqmatch?, ctrl?): Promise<Result>` | List entities matching the criteria. |
-| `create` | `create(reqdata?, ctrl?): Promise<Result>` | Create a new entity. |
-| `update` | `update(reqdata?, ctrl?): Promise<Result>` | Update an existing entity. |
-| `remove` | `remove(reqmatch?, ctrl?): Promise<Result>` | Remove an entity. |
+| `load` | `load(reqmatch?, ctrl?): Promise<Entity>` | Load a single entity by match criteria. |
+| `list` | `list(reqmatch?, ctrl?): Promise<Entity[]>` | List entities matching the criteria. |
+| `create` | `create(reqdata?, ctrl?): Promise<Entity>` | Create a new entity. |
+| `update` | `update(reqdata?, ctrl?): Promise<Entity>` | Update an existing entity. |
+| `remove` | `remove(reqmatch?, ctrl?): Promise<void>` | Remove an entity. |
 | `data` | `data(data?): any` | Get or set entity data. |
 | `match` | `match(match?): any` | Get or set entity match criteria. |
 | `make` | `make(): Entity` | Create a new instance with the same options. |
 | `client` | `client(): EuroRatesSDK` | Return the parent SDK client. |
 | `entopts` | `entopts(): object` | Return a copy of the entity options. |
 
-#### Result shape
+#### Return values
 
-All entity operations return a Result object:
+Entity operations resolve to the entity data directly — there is no
+result envelope:
 
-```ts
-{
-  ok: boolean      // true if the HTTP status is 2xx
-  status: number   // HTTP status code
-  headers: object  // response headers
-  data: any        // parsed JSON response body
-}
-```
+- `load`, `create` and `update` resolve to a single entity object.
+- `list` resolves to an **array** of entity objects (iterate it directly;
+  there is no `.data` and no `.ok`).
+- `remove` resolves to `void`.
+
+On a failed request these methods **throw**, so wrap calls in
+`try`/`catch` to handle errors. Only `direct()` returns the result
+envelope described below.
 
 ### DirectResult shape
 
@@ -276,7 +280,7 @@ API path: `/api/rates`
 
 ### Currency
 
-Create an instance: `const currency = client.currency`
+Create an instance: `const currency = client.Currency()`
 
 #### Operations
 
@@ -294,13 +298,13 @@ Create an instance: `const currency = client.currency`
 #### Example: List
 
 ```ts
-const currencys = await client.currency.list()
+const currencys = await client.Currency().list()
 ```
 
 
 ### ExchangeRate
 
-Create an instance: `const exchange_rate = client.exchange_rate`
+Create an instance: `const exchange_rate = client.ExchangeRate()`
 
 #### Operations
 
@@ -311,7 +315,7 @@ Create an instance: `const exchange_rate = client.exchange_rate`
 #### Example: Load
 
 ```ts
-const exchange_rate = await client.exchange_rate.load({ id: 'exchange_rate_id' })
+const exchange_rate = await client.ExchangeRate().load({ id: 'exchange_rate_id' })
 ```
 
 
@@ -382,7 +386,7 @@ stores the returned data and match criteria internally. Subsequent
 calls on the same instance can rely on this state.
 
 ```ts
-const currency = client.currency
+const currency = client.Currency()
 await currency.load({ id: "example_id" })
 
 // currency.data() now returns the loaded currency data

@@ -31,14 +31,16 @@ from eurorates_sdk import EuroRatesSDK
 client = EuroRatesSDK()
 ```
 
-### 2. List currencys
+### 2. List currency records
+
+`list()` returns a `list` of records (each a `dict`) and raises on
+error — iterate it directly.
 
 ```python
 try:
-    result = client.currency.list()
-    for item in result:
-        d = item.data_get()
-        print(d["id"], d["name"])
+    currencys = client.Currency().list({})
+    for currency in currencys:
+        print(currency)
 except Exception as err:
     print(f"list failed: {err}")
 ```
@@ -86,8 +88,9 @@ Create a mock client for unit testing — no server required:
 ```python
 client = EuroRatesSDK.test()
 
-result = client.currency.load({"id": "test01"})
-# result contains mock response data
+# Entity ops return the bare record and raise on error.
+currency = client.Currency().load({"id": "test01"})
+# currency contains the mock response record
 ```
 
 ### Use a custom fetch function
@@ -164,7 +167,7 @@ Creates a test-mode client with mock transport. Both arguments may be `None`.
 | `prepare` | `(fetchargs) -> dict` | Build an HTTP request definition without sending. Raises on error. |
 | `direct` | `(fetchargs) -> dict` | Build and send an HTTP request. Returns a result dict (branch on `ok`). |
 | `Currency` | `(data) -> CurrencyEntity` | Create a Currency entity instance. |
-| `ExchangeRate` | `(data) -> ExchangeRateEntity` | Create a ExchangeRate entity instance. |
+| `ExchangeRate` | `(data) -> ExchangeRateEntity` | Create an ExchangeRate entity instance. |
 
 ### Entity interface
 
@@ -231,7 +234,7 @@ API path: `/api/rates`
 
 ### Currency
 
-Create an instance: `const currency = client.currency`
+Create an instance: `currency = client.Currency()`
 
 #### Operations
 
@@ -248,14 +251,14 @@ Create an instance: `const currency = client.currency`
 
 #### Example: List
 
-```ts
-const currencys = await client.currency.list()
+```python
+currencys = client.Currency().list({})
 ```
 
 
 ### ExchangeRate
 
-Create an instance: `const exchange_rate = client.exchange_rate`
+Create an instance: `exchange_rate = client.ExchangeRate()`
 
 #### Operations
 
@@ -265,8 +268,8 @@ Create an instance: `const exchange_rate = client.exchange_rate`
 
 #### Example: Load
 
-```ts
-const exchange_rate = await client.exchange_rate.load({ id: 'exchange_rate_id' })
+```python
+exchange_rate = client.ExchangeRate().load({"id": "exchange_rate_id"})
 ```
 
 
@@ -340,7 +343,7 @@ Entity instances are stateful. After a successful `load`, the entity
 stores the returned data and match criteria internally.
 
 ```python
-currency = client.currency
+currency = client.Currency()
 currency.load({"id": "example_id"})
 
 # currency.data_get() now returns the loaded currency data

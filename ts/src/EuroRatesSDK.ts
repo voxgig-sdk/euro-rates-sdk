@@ -205,28 +205,14 @@ class EuroRatesSDK {
 
 
 
-  _currency?: CurrencyEntity
-
-  // Idiomatic facade: `client.currency.list()` / `client.currency.load({ id })`.
-  get currency(): CurrencyEntity {
-    return (this._currency ??= new CurrencyEntity(this, undefined))
-  }
-
-  /** @deprecated Use `client.currency` instead. */
+  // Entity access: `client.Currency().list()` / `client.Currency().load({ id })`.
   Currency(data?: any) {
     const self = this
     return new CurrencyEntity(self,data)
   }
 
 
-  _exchange_rate?: ExchangeRateEntity
-
-  // Idiomatic facade: `client.exchange_rate.list()` / `client.exchange_rate.load({ id })`.
-  get exchange_rate(): ExchangeRateEntity {
-    return (this._exchange_rate ??= new ExchangeRateEntity(this, undefined))
-  }
-
-  /** @deprecated Use `client.exchange_rate` instead. */
+  // Entity access: `client.ExchangeRate().list()` / `client.ExchangeRate().load({ id })`.
   ExchangeRate(data?: any) {
     const self = this
     return new ExchangeRateEntity(self,data)
