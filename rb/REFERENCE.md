@@ -8,7 +8,7 @@ Complete API reference for the EuroRates Ruby SDK.
 ### Constructor
 
 ```ruby
-require_relative 'euro-rates_sdk'
+require_relative 'EuroRates_sdk'
 
 client = EuroRatesSDK.new(options)
 ```
@@ -97,17 +97,17 @@ currency = client.Currency
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `name` | ``$STRING`` | No |  |
-| `symbol` | ``$STRING`` | No |  |
+| `name` | `String` | No |  |
+| `symbol` | `String` | No |  |
 
 ### Operations
 
-#### `list(reqmatch, ctrl = nil) -> Array`
+#### `list(reqmatch = nil, ctrl = nil) -> Array`
 
-List entities matching the given criteria. Returns an array. Raises on error.
+List entities matching the given criteria (call with no argument to list all). Returns an array. Raises on error.
 
 ```ruby
-results = client.Currency.list(nil)
+results = client.Currency.list
 ```
 
 ### Common Methods
@@ -153,7 +153,7 @@ exchange_rate = client.ExchangeRate
 Load a single entity matching the given criteria. Raises on error.
 
 ```ruby
-result = client.ExchangeRate.load({ "id" => "exchange_rate_id" })
+result = client.ExchangeRate.load()
 ```
 
 ### Common Methods

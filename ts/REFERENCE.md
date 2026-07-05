@@ -128,8 +128,8 @@ const currency = client.Currency()
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `name` | ``$STRING`` | No |  |
-| `symbol` | ``$STRING`` | No |  |
+| `name` | `string` | No |  |
+| `symbol` | `string` | No |  |
 
 ### Operations
 
@@ -182,7 +182,7 @@ const exchange_rate = client.ExchangeRate()
 Load a single entity matching the given criteria.
 
 ```ts
-const result = await client.ExchangeRate().load({ id: 'exchange_rate_id' })
+const result = await client.ExchangeRate().load()
 ```
 
 ### Common Methods

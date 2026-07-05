@@ -19,7 +19,7 @@ class Currency
     public ?string $symbol = null;
 }
 
-/** Match filter for Currency#list (any subset of Currency fields). */
+/** Request payload for Currency#list. */
 class CurrencyListMatch
 {
     public ?string $name = null;
@@ -31,7 +31,7 @@ class ExchangeRate
 {
 }
 
-/** Match filter for ExchangeRate#load (any subset of ExchangeRate fields). */
+/** Request payload for ExchangeRate#load. */
 class ExchangeRateLoadMatch
 {
 }

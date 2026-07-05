@@ -14,8 +14,7 @@ type Currency struct {
 	Symbol *string `json:"symbol,omitempty"`
 }
 
-// CurrencyListMatch mirrors the currency fields as an all-optional match
-// filter (Go analog of Partial<Currency>).
+// CurrencyListMatch is the typed request payload for Currency.ListTyped.
 type CurrencyListMatch struct {
 	Name *string `json:"name,omitempty"`
 	Symbol *string `json:"symbol,omitempty"`
@@ -25,8 +24,7 @@ type CurrencyListMatch struct {
 type ExchangeRate struct {
 }
 
-// ExchangeRateLoadMatch mirrors the exchange_rate fields as an all-optional match
-// filter (Go analog of Partial<ExchangeRate>).
+// ExchangeRateLoadMatch is the typed request payload for ExchangeRate.LoadTyped.
 type ExchangeRateLoadMatch struct {
 }
 

@@ -21,7 +21,7 @@ Currency = Struct.new(
   keyword_init: true
 )
 
-# Match filter for Currency#list (any subset of Currency fields).
+# Request payload for Currency#list.
 #
 # @!attribute [rw] name
 #   @return [String, nil]
@@ -38,7 +38,7 @@ CurrencyListMatch = Struct.new(
 class ExchangeRate
 end
 
-# Match filter for ExchangeRate#load (any subset of ExchangeRate fields).
+# Request payload for ExchangeRate#load.
 class ExchangeRateLoadMatch
 end
 

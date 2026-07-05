@@ -10,10 +10,14 @@ export interface Currency {
   symbol?: string
 }
 
-export type CurrencyListMatch = Partial<Currency>
+export interface CurrencyListMatch {
+  name?: string
+  symbol?: string
+}
 
 export interface ExchangeRate {
 }
 
-export type ExchangeRateLoadMatch = Partial<ExchangeRate>
+export interface ExchangeRateLoadMatch {
+}
 

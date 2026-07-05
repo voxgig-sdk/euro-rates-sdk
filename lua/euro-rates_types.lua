@@ -11,6 +11,8 @@
 ---@field symbol? string
 
 ---@class CurrencyListMatch
+---@field name? string
+---@field symbol? string
 
 ---@class ExchangeRate
 

@@ -8,7 +8,7 @@ Complete API reference for the EuroRates Python SDK.
 ### Constructor
 
 ```python
-from euro-rates_sdk import EuroRatesSDK
+from eurorates_sdk import EuroRatesSDK
 
 client = EuroRatesSDK(options)
 ```
@@ -91,17 +91,17 @@ currency = client.Currency()
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `name` | ``$STRING`` | No |  |
-| `symbol` | ``$STRING`` | No |  |
+| `name` | `str` | No |  |
+| `symbol` | `str` | No |  |
 
 ### Operations
 
-#### `list(reqmatch, ctrl=None) -> list`
+#### `list(reqmatch=None, ctrl=None) -> list`
 
-List entities matching the given criteria. Returns a list and raises on error.
+List entities matching the given criteria. The match is optional — call `list()` with no argument to list all records. Returns a list and raises on error.
 
 ```python
-results = client.Currency().list({})
+results = client.Currency().list()
 for currency in results:
     print(currency)
 ```
@@ -148,7 +148,7 @@ exchange_rate = client.ExchangeRate()
 Load a single entity matching the given criteria. Returns the entity data and raises on error.
 
 ```python
-result = client.ExchangeRate().load({"id": "exchange_rate_id"})
+result = client.ExchangeRate().load()
 ```
 
 ### Common Methods

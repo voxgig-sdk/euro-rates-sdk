@@ -8,7 +8,7 @@ Complete API reference for the EuroRates PHP SDK.
 ### Constructor
 
 ```php
-require_once __DIR__ . '/euro-rates_sdk.php';
+require_once __DIR__ . '/eurorates_sdk.php';
 
 $client = new EuroRatesSDK($options);
 ```
@@ -49,11 +49,11 @@ Create a new `CurrencyEntity` instance. Pass `null` for no initial data.
 
 Create a new `ExchangeRateEntity` instance. Pass `null` for no initial data.
 
-#### `optionsMap(): array`
+#### `options_map(): array`
 
 Return a deep copy of the current SDK options.
 
-#### `getUtility(): ProjectNameUtility`
+#### `get_utility(): EuroRatesUtility`
 
 Return a copy of the SDK utility object.
 
@@ -96,34 +96,34 @@ $currency = $client->Currency();
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `name` | ``$STRING`` | No |  |
-| `symbol` | ``$STRING`` | No |  |
+| `name` | `string` | No |  |
+| `symbol` | `string` | No |  |
 
 ### Operations
 
-#### `list(array $reqmatch, ?array $ctrl = null): mixed`
+#### `list(?array $reqmatch = null, ?array $ctrl = null): mixed`
 
-List entities matching the given criteria. Returns an array. Throws on error.
+List entities matching the given criteria (call with no argument to list all). Returns an array. Throws on error.
 
 ```php
-$results = $client->Currency()->list([]);
+$results = $client->Currency()->list();
 ```
 
 ### Common Methods
 
-#### `dataGet(): array`
+#### `data_get(): array`
 
 Get the entity data. Returns a copy of the current data.
 
-#### `dataSet($data): void`
+#### `data_set($data): void`
 
 Set the entity data.
 
-#### `matchGet(): array`
+#### `match_get(): array`
 
 Get the entity match criteria.
 
-#### `matchSet($match): void`
+#### `match_set($match): void`
 
 Set the entity match criteria.
 
@@ -132,7 +132,7 @@ Set the entity match criteria.
 Create a new `CurrencyEntity` instance with the same client and
 options.
 
-#### `getName(): string`
+#### `get_name(): string`
 
 Return the entity name.
 
@@ -152,24 +152,24 @@ $exchange_rate = $client->ExchangeRate();
 Load a single entity matching the given criteria. Throws on error.
 
 ```php
-$result = $client->ExchangeRate()->load(["id" => "exchange_rate_id"]);
+$result = $client->ExchangeRate()->load();
 ```
 
 ### Common Methods
 
-#### `dataGet(): array`
+#### `data_get(): array`
 
 Get the entity data. Returns a copy of the current data.
 
-#### `dataSet($data): void`
+#### `data_set($data): void`
 
 Set the entity data.
 
-#### `matchGet(): array`
+#### `match_get(): array`
 
 Get the entity match criteria.
 
-#### `matchSet($match): void`
+#### `match_set($match): void`
 
 Set the entity match criteria.
 
@@ -178,7 +178,7 @@ Set the entity match criteria.
 Create a new `ExchangeRateEntity` instance with the same client and
 options.
 
-#### `getName(): string`
+#### `get_name(): string`
 
 Return the entity name.
 

@@ -94,8 +94,8 @@ local currency = client:Currency(nil)
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `name` | ``$STRING`` | No |  |
-| `symbol` | ``$STRING`` | No |  |
+| `name` | `string` | No |  |
+| `symbol` | `string` | No |  |
 
 ### Operations
 
@@ -150,7 +150,7 @@ local exchange_rate = client:ExchangeRate(nil)
 Load a single entity matching the given criteria.
 
 ```lua
-local result, err = client:ExchangeRate():load({ id = "exchange_rate_id" })
+local result, err = client:ExchangeRate():load()
 ```
 
 ### Common Methods

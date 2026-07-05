@@ -221,13 +221,13 @@ class EuroRatesSDK:
 
 
     def Currency(self, data=None) -> "CurrencyEntity":
-        """Entity factory: client.Currency().list({}) / client.Currency().load({"id": ...})."""
+        """Entity factory: client.Currency().list() / client.Currency().load({"id": ...})."""
         from entity.currency_entity import CurrencyEntity
         return CurrencyEntity(self, data)
 
 
     def ExchangeRate(self, data=None) -> "ExchangeRateEntity":
-        """Entity factory: client.ExchangeRate().list({}) / client.ExchangeRate().load({"id": ...})."""
+        """Entity factory: client.ExchangeRate().list() / client.ExchangeRate().load({"id": ...})."""
         from entity.exchange_rate_entity import ExchangeRateEntity
         return ExchangeRateEntity(self, data)
 

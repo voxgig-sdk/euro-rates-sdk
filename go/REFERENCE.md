@@ -101,8 +101,8 @@ currency := client.Currency(nil)
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `name` | ``$STRING`` | No |  |
-| `symbol` | ``$STRING`` | No |  |
+| `name` | `string` | No |  |
+| `symbol` | `string` | No |  |
 
 ### Operations
 
@@ -151,7 +151,7 @@ exchange_rate := client.ExchangeRate(nil)
 Load a single entity matching the given criteria.
 
 ```go
-result, err := client.ExchangeRate(nil).Load(map[string]any{"id": "exchange_rate_id"}, nil)
+result, err := client.ExchangeRate(nil).Load(nil, nil)
 ```
 
 ### Common Methods
