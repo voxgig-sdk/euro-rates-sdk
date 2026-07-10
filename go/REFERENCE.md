@@ -95,6 +95,7 @@ same parameters as `Direct()`.
 
 ```go
 currency := client.Currency(nil)
+fmt.Println(currency.GetName()) // "currency"
 ```
 
 ### Fields
@@ -112,6 +113,10 @@ List entities matching the given criteria. Returns an array.
 
 ```go
 results, err := client.Currency(nil).List(nil, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(results)
 ```
 
 ### Common Methods
@@ -141,7 +146,8 @@ Return the entity name.
 ## ExchangeRateEntity
 
 ```go
-exchange_rate := client.ExchangeRate(nil)
+exchangeRate := client.ExchangeRate(nil)
+fmt.Println(exchangeRate.GetName()) // "exchange_rate"
 ```
 
 ### Operations
@@ -152,6 +158,10 @@ Load a single entity matching the given criteria.
 
 ```go
 result, err := client.ExchangeRate(nil).Load(nil, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
 ```
 
 ### Common Methods

@@ -11,9 +11,9 @@ main: {
           url: "https://api.exchangerate.host"
         }
       ]
+      summary: "Free API connect to https://www.ecb.europa.eu"
       title: "Exchange Rate API"
       version: "1.0.0"
+      website: "https://exchangerate.host"
     }
   }
-}
-

@@ -314,7 +314,7 @@ fmt.Println(currencys) // the array of records
 
 ### ExchangeRate
 
-Create an instance: `exchange_rate := client.ExchangeRate(nil)`
+Create an instance: `exchangeRate := client.ExchangeRate(nil)`
 
 #### Operations
 
@@ -325,11 +325,11 @@ Create an instance: `exchange_rate := client.ExchangeRate(nil)`
 #### Example: Load
 
 ```go
-exchange_rate, err := client.ExchangeRate(nil).Load(nil, nil)
+exchangeRate, err := client.ExchangeRate(nil).Load(nil, nil)
 if err != nil {
     panic(err)
 }
-fmt.Println(exchange_rate) // the loaded record
+fmt.Println(exchangeRate) // the loaded record
 ```
 
 

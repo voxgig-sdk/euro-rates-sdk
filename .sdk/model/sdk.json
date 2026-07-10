@@ -6,9 +6,6 @@
     },
     "kit": {
       "config": {
-        "auth": {
-          "prefix": "Bearer"
-        },
         "docs_order": [
           "ts",
           "py",
@@ -284,13 +281,16 @@
       "info": {
         "auth": false,
         "description": "Free API connect to https://www.ecb.europa.eu",
+        "meta_source": "https://www.freepublicapis.com",
         "servers": [
           {
             "url": "https://api.exchangerate.host"
           }
         ],
+        "summary": "Free API connect to https://www.ecb.europa.eu",
         "title": "Exchange Rate API",
-        "version": "1.0.0"
+        "version": "1.0.0",
+        "website": "https://exchangerate.host"
       },
       "option": {},
       "target": {
@@ -343,6 +343,9 @@
           },
           "name": "go-cli",
           "phase": {
+            "agentguide": {
+              "active": false
+            },
             "entity": {
               "active": false
             },
@@ -393,6 +396,9 @@
           },
           "name": "go-mcp",
           "phase": {
+            "agentguide": {
+              "active": false
+            },
             "entity": {
               "active": false
             },
