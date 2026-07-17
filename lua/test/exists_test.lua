@@ -1,4 +1,4 @@
--- ProjectName SDK exists test
+-- EuroRates SDK exists test
 
 local sdk = require("euro-rates_sdk")
 
