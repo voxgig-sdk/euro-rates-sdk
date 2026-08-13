@@ -14,12 +14,12 @@ from __future__ import annotations
 
 from urllib.parse import quote
 
-from config import make_config
-from features import _make_feature
-from core.control import EuroRatesControl
-from core.error import EuroRatesError
-from core.result import EuroRatesResult
-from core.spec import EuroRatesSpec
+from eurorates_sdk.config import make_config
+from eurorates_sdk.features import _make_feature
+from eurorates_sdk.core.control import EuroRatesControl
+from eurorates_sdk.core.error import EuroRatesError
+from eurorates_sdk.core.result import EuroRatesResult
+from eurorates_sdk.core.spec import EuroRatesSpec
 
 
 # True when this SDK was generated with the named feature.

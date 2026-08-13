@@ -125,7 +125,8 @@ Create a mock client for unit testing — no server required:
 ```php
 $client = EuroRatesSDK::test();
 
-// Entity ops return the bare mock record (throws on error).
+// Entity ops return the ENTITY (throws on error);
+// call data_get() for the mock record.
 $currency = $client->Currency()->list();
 print_r($currency);
 ```
@@ -226,7 +227,7 @@ All entities share the same interface.
 
 ### Result shape
 
-Entity operations return the bare result data (an `array` for single-entity
+Entity operations return the ENTITY (call data_get() for the record) (an `array` for single-entity
 ops, a `list` for `list`) and throw on error. Wrap calls in
 `try`/`catch` to handle failures.
 
@@ -307,7 +308,7 @@ Create an instance: `$exchange_rate = $client->ExchangeRate();`
 #### Example: Load
 
 ```php
-// load() returns the bare ExchangeRate record (throws on error).
+// load() returns the ENTITY — call data_get() for the ExchangeRate record (throws on error).
 $exchange_rate = $client->ExchangeRate()->load();
 ```
 

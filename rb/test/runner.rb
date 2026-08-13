@@ -23,8 +23,8 @@ module EuroRatesTestRunner
   end
 
   def self.env_override(m)
-    live = getenv("EURORATES_TEST_LIVE")
-    override = getenv("EURORATES_TEST_OVERRIDE")
+    live = getenv("EURO_RATES_TEST_LIVE")
+    override = getenv("EURO_RATES_TEST_OVERRIDE")
 
     if live == "TRUE" || override == "TRUE"
       m.each_key do |key|
@@ -44,8 +44,8 @@ module EuroRatesTestRunner
       end
     end
 
-    explain = getenv("EURORATES_TEST_EXPLAIN")
-    m["EURORATES_TEST_EXPLAIN"] = explain if explain && !explain.empty?
+    explain = getenv("EURO_RATES_TEST_EXPLAIN")
+    m["EURO_RATES_TEST_EXPLAIN"] = explain if explain && !explain.empty?
 
     m
   end

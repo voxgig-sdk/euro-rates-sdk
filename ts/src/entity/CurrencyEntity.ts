@@ -37,7 +37,7 @@ class CurrencyEntity extends EuroRatesEntityBase<Currency> {
 
 
 
-  async list(this: any, reqmatch?: CurrencyListMatch, ctrl?: Control): Promise<Currency[]> {
+  async list(this: any, reqmatch?: CurrencyListMatch, ctrl?: Control): Promise<CurrencyEntity[]> {
 
     const utility = this._utility
 

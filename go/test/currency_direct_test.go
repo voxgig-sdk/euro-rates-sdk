@@ -36,9 +36,10 @@ func TestCurrencyDirect(t *testing.T) {
 			"params": map[string]any{},
 		})
 		if setup.live {
-			// Live mode is lenient: synthetic IDs frequently 4xx and the
-			// list-response shape varies wildly across public APIs. Skip
-			// rather than fail when the call doesn't return a usable list.
+			// Live-mode leniency is a model decision
+			// (main.kit.test.live.strict): synthetic IDs 4xx constantly
+			// against an arbitrary public API, so the default SKIPS here.
+			// A project that owns its test server sets strict and FAILS.
 			if err != nil {
 				t.Skipf("list call failed (likely synthetic IDs against live API): %v", err)
 			}
@@ -91,11 +92,11 @@ func currencyDirectSetup(mockres any) *currencyDirectSetupResult {
 	calls := &[]map[string]any{}
 
 	env := envOverride(map[string]any{
-		"EURORATES_TEST_CURRENCY_ENTID": map[string]any{},
-		"EURORATES_TEST_LIVE":    "FALSE",
+		"EURO_RATES_TEST_CURRENCY_ENTID": map[string]any{},
+		"EURO_RATES_TEST_LIVE":    "FALSE",
 	})
 
-	live := env["EURORATES_TEST_LIVE"] == "TRUE"
+	live := env["EURO_RATES_TEST_LIVE"] == "TRUE"
 
 	if live {
 		mergedOpts := map[string]any{
@@ -103,7 +104,7 @@ func currencyDirectSetup(mockres any) *currencyDirectSetupResult {
 		client := sdk.NewEuroRatesSDK(mergedOpts)
 
 		idmap := map[string]any{}
-		if entidRaw, ok := env["EURORATES_TEST_CURRENCY_ENTID"]; ok {
+		if entidRaw, ok := env["EURO_RATES_TEST_CURRENCY_ENTID"]; ok {
 			if entidStr, ok := entidRaw.(string); ok && strings.HasPrefix(entidStr, "{") {
 				json.Unmarshal([]byte(entidStr), &idmap)
 			} else if entidMap, ok := entidRaw.(map[string]any); ok {

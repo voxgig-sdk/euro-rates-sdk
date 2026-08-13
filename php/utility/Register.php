@@ -23,6 +23,7 @@ require_once __DIR__ . '/MakeUrl.php';
 require_once __DIR__ . '/Param.php';
 require_once __DIR__ . '/PrepareAuth.php';
 require_once __DIR__ . '/PrepareBody.php';
+require_once __DIR__ . '/Graphql.php';
 require_once __DIR__ . '/PrepareHeaders.php';
 require_once __DIR__ . '/PrepareMethod.php';
 require_once __DIR__ . '/PrepareParams.php';
@@ -59,6 +60,8 @@ EuroRatesUtility::setRegistrar(function (EuroRatesUtility $u): void {
     $u->prepare_params = [EuroRatesPrepareParams::class, 'call'];
     $u->prepare_path = [EuroRatesPreparePath::class, 'call'];
     $u->prepare_query = [EuroRatesPrepareQuery::class, 'call'];
+    $u->graphql_body = [EuroRatesGraphql::class, 'body'];
+    $u->graphql_errors = [EuroRatesGraphql::class, 'errors'];
     $u->result_basic = [EuroRatesResultBasic::class, 'call'];
     $u->result_body = [EuroRatesResultBody::class, 'call'];
     $u->result_headers = [EuroRatesResultHeaders::class, 'call'];

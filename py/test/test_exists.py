@@ -1,4 +1,4 @@
-# ProjectName SDK exists test
+# EuroRates SDK exists test
 
 import pytest
 from eurorates_sdk import EuroRatesSDK

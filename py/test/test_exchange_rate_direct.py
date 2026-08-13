@@ -3,9 +3,9 @@
 import json
 import pytest
 
-from utility.voxgig_struct import voxgig_struct as vs
+from eurorates_sdk.utility.voxgig_struct import voxgig_struct as vs
 from eurorates_sdk import EuroRatesSDK
-from core import helpers
+from eurorates_sdk.core import helpers
 from test import runner
 
 
@@ -62,11 +62,11 @@ def _exchange_rate_direct_setup(mockres):
     calls = []
 
     env = runner.env_override({
-        "EURORATES_TEST_EXCHANGE_RATE_ENTID": {},
-        "EURORATES_TEST_LIVE": "FALSE",
+        "EURO_RATES_TEST_EXCHANGE_RATE_ENTID": {},
+        "EURO_RATES_TEST_LIVE": "FALSE",
     })
 
-    live = env.get("EURORATES_TEST_LIVE") == "TRUE"
+    live = env.get("EURO_RATES_TEST_LIVE") == "TRUE"
 
     if live:
         merged_opts = {

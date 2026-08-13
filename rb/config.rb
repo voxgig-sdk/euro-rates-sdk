@@ -50,6 +50,7 @@ module EuroRatesConfig
                 {
                   "active" => true,
                   "args" => {},
+                  "kind" => "http",
                   "method" => "GET",
                   "orig" => "/api/all-currencies",
                   "parts" => [
@@ -103,6 +104,7 @@ module EuroRatesConfig
                       },
                     ],
                   },
+                  "kind" => "http",
                   "method" => "GET",
                   "orig" => "/api/rates",
                   "parts" => [

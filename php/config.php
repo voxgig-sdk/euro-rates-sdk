@@ -55,6 +55,7 @@ class EuroRatesConfig
                 [
                   'active' => true,
                   'args' => [],
+                  'kind' => 'http',
                   'method' => 'GET',
                   'orig' => '/api/all-currencies',
                   'parts' => [
@@ -108,6 +109,7 @@ class EuroRatesConfig
                       ],
                     ],
                   ],
+                  'kind' => 'http',
                   'method' => 'GET',
                   'orig' => '/api/rates',
                   'parts' => [

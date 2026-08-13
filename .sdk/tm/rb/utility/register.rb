@@ -24,6 +24,7 @@ require_relative 'prepare_method'
 require_relative 'prepare_params'
 require_relative 'prepare_path'
 require_relative 'prepare_query'
+require_relative 'graphql'
 require_relative 'result_basic'
 require_relative 'result_body'
 require_relative 'result_headers'
@@ -55,6 +56,8 @@ EuroRatesUtility.registrar = ->(u) {
   u.prepare_params = EuroRatesUtilities::PrepareParams
   u.prepare_path = EuroRatesUtilities::PreparePath
   u.prepare_query = EuroRatesUtilities::PrepareQuery
+  u.graphql_body = EuroRatesUtilities::GraphqlBody
+  u.graphql_errors = EuroRatesUtilities::GraphqlErrors
   u.result_basic = EuroRatesUtilities::ResultBasic
   u.result_body = EuroRatesUtilities::ResultBody
   u.result_headers = EuroRatesUtilities::ResultHeaders

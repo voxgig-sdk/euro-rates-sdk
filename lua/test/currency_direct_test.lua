@@ -61,11 +61,11 @@ function currency_direct_setup(mockres)
   local calls = {}
 
   local env = runner.env_override({
-    ["EURORATES_TEST_CURRENCY_ENTID"] = {},
-    ["EURORATES_TEST_LIVE"] = "FALSE",
+    ["EURO_RATES_TEST_CURRENCY_ENTID"] = {},
+    ["EURO_RATES_TEST_LIVE"] = "FALSE",
   })
 
-  local live = env["EURORATES_TEST_LIVE"] == "TRUE"
+  local live = env["EURO_RATES_TEST_LIVE"] == "TRUE"
 
   if live then
     local merged_opts = {

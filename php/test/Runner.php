@@ -43,8 +43,8 @@ class EuroRatesTestRunner
 
     public static function env_override(array $m): array
     {
-        $live = self::getenv('EURORATES_TEST_LIVE');
-        $override = self::getenv('EURORATES_TEST_OVERRIDE');
+        $live = self::getenv('EURO_RATES_TEST_LIVE');
+        $override = self::getenv('EURO_RATES_TEST_OVERRIDE');
 
         if ($live === 'TRUE' || $override === 'TRUE') {
             foreach (array_keys($m) as $key) {
@@ -63,9 +63,9 @@ class EuroRatesTestRunner
             }
         }
 
-        $explain = self::getenv('EURORATES_TEST_EXPLAIN');
+        $explain = self::getenv('EURO_RATES_TEST_EXPLAIN');
         if ($explain !== null && $explain !== '') {
-            $m['EURORATES_TEST_EXPLAIN'] = $explain;
+            $m['EURO_RATES_TEST_EXPLAIN'] = $explain;
         }
 
         return $m;

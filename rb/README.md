@@ -119,7 +119,8 @@ Create a mock client for unit testing — no server required:
 ```ruby
 client = EuroRatesSDK.test
 
-# Entity ops return the bare mock record (raises on error).
+# Entity ops return the ENTITY (raises on error);
+# call data_get for the mock record.
 currency = client.Currency.list()
 puts currency
 ```
@@ -297,7 +298,7 @@ Create an instance: `exchange_rate = client.ExchangeRate`
 #### Example: Load
 
 ```ruby
-# load returns the bare ExchangeRate record (raises on error).
+# load returns the ENTITY — call data_get for the ExchangeRate record (raises on error).
 exchange_rate = client.ExchangeRate.load()
 ```
 

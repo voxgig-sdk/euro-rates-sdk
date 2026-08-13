@@ -16,11 +16,11 @@
 import pytest
 
 from projectname_sdk import EuroRatesSDK
-from core.error import EuroRatesError
-from core.result import EuroRatesResult
-from core.response import EuroRatesResponse
-from core.spec import EuroRatesSpec
-from feature.base_feature import EuroRatesBaseFeature
+from projectname_sdk.core.error import EuroRatesError
+from projectname_sdk.core.result import EuroRatesResult
+from projectname_sdk.core.response import EuroRatesResponse
+from projectname_sdk.core.spec import EuroRatesSpec
+from projectname_sdk.feature.base_feature import EuroRatesBaseFeature
 
 
 def _client():

@@ -26,8 +26,8 @@ import {
 describe('ExchangeRateEntity', async () => {
 
   // Per-test live pacing. Delay is read from sdk-test-control.json's
-  // `test.live.delayMs`; only sleeps when EURORATES_TEST_LIVE=TRUE.
-  afterEach(liveDelay('EURORATES_TEST_LIVE'))
+  // `test.live.delayMs`; only sleeps when EURO_RATES_TEST_LIVE=TRUE.
+  afterEach(liveDelay('EURO_RATES_TEST_LIVE'))
 
   test('instance', async () => {
     const testsdk = EuroRatesSDK.test()
@@ -62,7 +62,7 @@ describe('ExchangeRateEntity', async () => {
     // LOAD
     const exchange_rate_ref01_ent = client.ExchangeRate()
     const exchange_rate_ref01_match_dt0: any = {}
-    const exchange_rate_ref01_data_dt0 = await exchange_rate_ref01_ent.load(exchange_rate_ref01_match_dt0)
+    const exchange_rate_ref01_data_dt0 = (await exchange_rate_ref01_ent.load(exchange_rate_ref01_match_dt0)).data()
     assert(null != exchange_rate_ref01_data_dt0)
 
 
