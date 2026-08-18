@@ -40,7 +40,7 @@ class EuroRatesSDK
         $utility = new EuroRatesUtility();
         $this->_utility = $utility;
 
-        $config = EuroRatesConfig::make_config();
+        $config = EuroRatesConfig::shared_config();
 
         $this->_rootctx = ($utility->make_context)([
             "client" => $this,

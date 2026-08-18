@@ -28,7 +28,7 @@ class EuroRatesSDK
     utility = EuroRatesUtility.new
     @_utility = utility
 
-    config = EuroRatesConfig.make_config
+    config = EuroRatesConfig.shared_config
 
     @_rootctx = utility.make_context.call({
       "client" => self,
