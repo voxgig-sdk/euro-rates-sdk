@@ -33,6 +33,9 @@ class EuroRatesConfig
         return [
             "main" => [
                 "name" => "EuroRates",
+                "slug" => "euro-rates",
+                "version" => "0.0.1",
+                "target" => "php",
             ],
             "feature" => [
                 "test" => [
