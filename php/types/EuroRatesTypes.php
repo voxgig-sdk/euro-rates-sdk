@@ -34,5 +34,7 @@ class ExchangeRate
 /** Request payload for ExchangeRate#load. */
 class ExchangeRateLoadMatch
 {
+    public string $from;
+    public string $to;
 }
 

@@ -39,6 +39,15 @@ class ExchangeRate
 end
 
 # Request payload for ExchangeRate#load.
-class ExchangeRateLoadMatch
-end
+#
+# @!attribute [rw] from
+#   @return [String]
+#
+# @!attribute [rw] to
+#   @return [String]
+ExchangeRateLoadMatch = Struct.new(
+  :from,
+  :to,
+  keyword_init: true
+)
 

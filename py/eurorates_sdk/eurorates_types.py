@@ -31,4 +31,4 @@ class ExchangeRate(TypedDict):
 
 
 class ExchangeRateLoadMatch(TypedDict):
-    pass
+    to: str

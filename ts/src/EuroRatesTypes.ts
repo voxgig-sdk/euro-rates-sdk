@@ -19,5 +19,7 @@ export interface ExchangeRate {
 }
 
 export interface ExchangeRateLoadMatch {
+  from: string
+  to: string
 }
 

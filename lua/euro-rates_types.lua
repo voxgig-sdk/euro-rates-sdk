@@ -17,6 +17,8 @@
 ---@class ExchangeRate
 
 ---@class ExchangeRateLoadMatch
+---@field from string
+---@field to string
 
 local M = {}
 

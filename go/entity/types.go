@@ -30,6 +30,8 @@ type ExchangeRate struct {
 
 // ExchangeRateLoadMatch is the typed request payload for ExchangeRate.LoadTyped.
 type ExchangeRateLoadMatch struct {
+	From string `json:"from"`
+	To string `json:"to"`
 }
 
 // asMap turns a typed request/data struct into the map[string]any the
