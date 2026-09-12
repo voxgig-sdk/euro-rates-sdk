@@ -64,15 +64,23 @@ module EuroRatesConfig
                   "kind" => "http",
                   "method" => "GET",
                   "orig" => "/api/all-currencies",
-                  "parts" => [
-                    "api",
-                    "all-currencies",
+                  "segments" => [
+                    {
+                      "lit" => "api",
+                    },
+                    {
+                      "lit" => "all-currencies",
+                    },
                   ],
                   "select" => {},
                   "transform" => {
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "api",
+                    "all-currencies",
+                  ],
                 },
               ],
             },
@@ -113,9 +121,13 @@ module EuroRatesConfig
                   "kind" => "http",
                   "method" => "GET",
                   "orig" => "/api/rates",
-                  "parts" => [
-                    "api",
-                    "rates",
+                  "segments" => [
+                    {
+                      "lit" => "api",
+                    },
+                    {
+                      "lit" => "rates",
+                    },
                   ],
                   "select" => {
                     "exist" => [
@@ -127,6 +139,10 @@ module EuroRatesConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "api",
+                    "rates",
+                  ],
                 },
               ],
             },

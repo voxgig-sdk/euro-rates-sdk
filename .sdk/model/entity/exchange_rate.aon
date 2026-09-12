@@ -32,9 +32,13 @@ main: kit: entity: exchange_rate: {
           }
           method: "GET"
           orig: "/api/rates"
-          parts: [
-            "api"
-            "rates"
+          segments: [
+            {
+              lit: "api"
+            }
+            {
+              lit: "rates"
+            }
           ]
           select: {
             exist: [
