@@ -28,7 +28,7 @@ loading a specific record.
 ### 1. Create a client
 
 ```ts
-import { EuroRatesSDK } from '@voxgig-sdk/euro-rates'
+import { EuroRatesSDK } from '@voxgig-sdk/euro-rates-sdk'
 
 const client = new EuroRatesSDK()
 ```
@@ -434,7 +434,7 @@ euro-rates/
 Import the SDK from the package root:
 
 ```ts
-import { EuroRatesSDK } from '@voxgig-sdk/euro-rates'
+import { EuroRatesSDK } from '@voxgig-sdk/euro-rates-sdk'
 ```
 
 ### Entity state

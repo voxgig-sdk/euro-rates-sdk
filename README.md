@@ -105,7 +105,7 @@ local results, err = client:Currency():list()
 
 | Language | Package | Install |
 | --- | --- | --- |
-| TypeScript | `@voxgig-sdk/euro-rates` | publish pending — [install from git tag](https://github.com/voxgig-sdk/euro-rates-sdk/releases) |
+| TypeScript | `@voxgig-sdk/euro-rates-sdk` | publish pending — [install from git tag](https://github.com/voxgig-sdk/euro-rates-sdk/releases) |
 | Python | `voxgig-sdk-euro-rates` | publish pending — [install from git tag](https://github.com/voxgig-sdk/euro-rates-sdk/releases) |
 | PHP | `voxgig-sdk/euro-rates` | publish pending — [install from git tag](https://github.com/voxgig-sdk/euro-rates-sdk/releases) |
 | Golang | `github.com/voxgig-sdk/euro-rates-sdk/go` | `go get github.com/voxgig-sdk/euro-rates-sdk/go@latest` |
@@ -119,7 +119,7 @@ local results, err = client:Currency():list()
 ### TypeScript
 
 ```ts
-import { EuroRatesSDK } from '@voxgig-sdk/euro-rates'
+import { EuroRatesSDK } from '@voxgig-sdk/euro-rates-sdk'
 
 const client = new EuroRatesSDK()
 
