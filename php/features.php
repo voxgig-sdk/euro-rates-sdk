@@ -4,7 +4,10 @@ declare(strict_types=1);
 // EuroRates SDK feature factory
 
 require_once __DIR__ . '/feature/BaseFeature.php';
+require_once __DIR__ . '/feature/RatelimitFeature.php';
+require_once __DIR__ . '/feature/RetryFeature.php';
 require_once __DIR__ . '/feature/TestFeature.php';
+require_once __DIR__ . '/feature/TimeoutFeature.php';
 
 
 class EuroRatesFeatures
@@ -14,8 +17,14 @@ class EuroRatesFeatures
         switch ($name) {
             case "base":
                 return new EuroRatesBaseFeature();
+            case "ratelimit":
+                return new EuroRatesRatelimitFeature();
+            case "retry":
+                return new EuroRatesRetryFeature();
             case "test":
                 return new EuroRatesTestFeature();
+            case "timeout":
+                return new EuroRatesTimeoutFeature();
             default:
                 return new EuroRatesBaseFeature();
         }
@@ -31,7 +40,10 @@ class EuroRatesFeatures
     {
         switch ($name) {
             case "base":
+            case "ratelimit":
+            case "retry":
             case "test":
+            case "timeout":
                 return true;
             default:
                 return false;

@@ -23,6 +23,12 @@ main: kit: entity: currency: {
       name: "list"
       points: [
         {
+          contract: {
+            id: "GET /api/all-currencies"
+            json: "{\"operationId\":\"getAllCurrencies\",\"parameters\":[],\"protocol\":\"http\",\"responses\":{\"200\":{\"content\":{\"application/json\":{\"example\":[{\"name\":\"US Dollar\",\"symbol\":\"USD\"},{\"name\":\"Euro\",\"symbol\":\"EUR\"},{\"name\":\"Japanese Yen\",\"symbol\":\"JPY\"},{\"name\":\"British Pound\",\"symbol\":\"GBP\"}],\"schema\":{\"items\":{\"properties\":{\"name\":{\"type\":\"string\"},\"symbol\":{\"type\":\"string\"}},\"type\":\"object\"},\"type\":\"array\"}}},\"description\":\"List of currencies\"}},\"securitySource\":\"unspecified\"}"
+            source: "openapi3"
+            version: 1
+          }
           method: "GET"
           orig: "/api/all-currencies"
           segments: [

@@ -1,12 +1,18 @@
 # EuroRates SDK feature factory
 
 from eurorates_sdk.feature.base_feature import EuroRatesBaseFeature
+from eurorates_sdk.feature.ratelimit_feature import EuroRatesRatelimitFeature
+from eurorates_sdk.feature.retry_feature import EuroRatesRetryFeature
 from eurorates_sdk.feature.test_feature import EuroRatesTestFeature
+from eurorates_sdk.feature.timeout_feature import EuroRatesTimeoutFeature
 
 
 _FEATURES = {
     "base": lambda: EuroRatesBaseFeature(),
+    "ratelimit": lambda: EuroRatesRatelimitFeature(),
+    "retry": lambda: EuroRatesRetryFeature(),
     "test": lambda: EuroRatesTestFeature(),
+    "timeout": lambda: EuroRatesTimeoutFeature(),
 }
 
 
