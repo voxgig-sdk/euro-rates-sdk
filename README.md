@@ -105,12 +105,12 @@ local results, err = client:Currency():list()
 
 | Language | Package | Install |
 | --- | --- | --- |
-| TypeScript | `@voxgig-sdk/euro-rates-sdk` | publish pending — [install from git tag](https://github.com/voxgig-sdk/euro-rates-sdk/releases) |
-| Python | `voxgig-sdk-euro-rates` | publish pending — [install from git tag](https://github.com/voxgig-sdk/euro-rates-sdk/releases) |
-| PHP | `voxgig-sdk/euro-rates` | publish pending — [install from git tag](https://github.com/voxgig-sdk/euro-rates-sdk/releases) |
+| TypeScript | `@voxgig-sdk/euro-rates-sdk` | publish pending — [install from git tag](https://github.com/voxgig-sdk/euro-rates-sdk/tags) |
+| Python | `voxgig-sdk-euro-rates` | publish pending — [install from git tag](https://github.com/voxgig-sdk/euro-rates-sdk/tags) |
+| PHP | `voxgig-sdk/euro-rates` | publish pending — [install from git tag](https://github.com/voxgig-sdk/euro-rates-sdk/tags) |
 | Golang | `github.com/voxgig-sdk/euro-rates-sdk/go` | `go get github.com/voxgig-sdk/euro-rates-sdk/go@latest` |
-| Ruby | `voxgig-sdk-euro-rates` | publish pending — [install from git tag](https://github.com/voxgig-sdk/euro-rates-sdk/releases) |
-| Lua | `voxgig-sdk-euro-rates` | publish pending — [install from git tag](https://github.com/voxgig-sdk/euro-rates-sdk/releases) |
+| Ruby | `voxgig-sdk-euro-rates` | publish pending — [install from git tag](https://github.com/voxgig-sdk/euro-rates-sdk/tags) |
+| Lua | `voxgig-sdk-euro-rates` | publish pending — [install from git tag](https://github.com/voxgig-sdk/euro-rates-sdk/tags) |
 | Go CLI | `github.com/voxgig-sdk/euro-rates-sdk/go-cli` | `go install github.com/voxgig-sdk/euro-rates-sdk/go-cli/cmd/euro-rates@latest` |
 | Go MCP server | `github.com/voxgig-sdk/euro-rates-sdk/go-mcp` | `go get github.com/voxgig-sdk/euro-rates-sdk/go-mcp@latest` |
 

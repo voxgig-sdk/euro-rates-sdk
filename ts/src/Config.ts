@@ -127,12 +127,12 @@ class Config {
 
     entity: {
       
-      currency: {
-      },
-
-      exchange_rate: {
-      },
-
+        currency: {
+        },
+  
+        exchange_rate: {
+        },
+  
     }
   }
 

@@ -1,4 +1,4 @@
 # Flows
 
-@"BasicCurrencyFlow.aon"
-@"BasicExchangeRateFlow.aon"
+@"./BasicCurrencyFlow.aon"
+@"./BasicExchangeRateFlow.aon"
