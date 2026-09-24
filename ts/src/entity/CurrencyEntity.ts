@@ -19,7 +19,6 @@ import type {
   CurrencyListMatch,
 } from '../EuroRatesTypes'
 
-// TODO: needs Entity superclass
 class CurrencyEntity extends EuroRatesEntityBase<Currency> {
 
   constructor(client: EuroRatesSDK, entopts: any) {

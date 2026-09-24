@@ -92,10 +92,12 @@ func MakeConfig() map[string]any {
 				"fields": []any{
 					map[string]any{
 						"name": "name",
+						"title": "Name",
 						"type": "`$STRING`",
 					},
 					map[string]any{
 						"name": "symbol",
+						"title": "Symbol",
 						"type": "`$STRING`",
 					},
 				},
@@ -106,7 +108,6 @@ func MakeConfig() map[string]any {
 						"name": "list",
 						"points": []any{
 							map[string]any{
-								"args": map[string]any{},
 								"kind": "http",
 								"method": "GET",
 								"orig": "/api/all-currencies",
@@ -118,15 +119,17 @@ func MakeConfig() map[string]any {
 										"lit": "all-currencies",
 									},
 								},
-								"select": map[string]any{},
-								"transform": map[string]any{
-									"req": "`reqdata`",
-									"res": "`body`",
-								},
 								"parts": []any{
 									"api",
 									"all-currencies",
 								},
+								"rename": map[string]any{},
+								"transform": map[string]any{
+									"req": "`reqdata`",
+									"res": "`body`",
+								},
+								"args": map[string]any{},
+								"select": map[string]any{},
 							},
 						},
 					},
@@ -144,26 +147,6 @@ func MakeConfig() map[string]any {
 						"name": "load",
 						"points": []any{
 							map[string]any{
-								"args": map[string]any{
-									"query": []any{
-										map[string]any{
-											"example": "EUR",
-											"kind": "query",
-											"name": "from",
-											"orig": "from",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-										map[string]any{
-											"example": "HKD,GBP,USD",
-											"kind": "query",
-											"name": "to",
-											"orig": "to",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-									},
-								},
 								"kind": "http",
 								"method": "GET",
 								"orig": "/api/rates",
@@ -175,19 +158,40 @@ func MakeConfig() map[string]any {
 										"lit": "rates",
 									},
 								},
+								"parts": []any{
+									"api",
+									"rates",
+								},
+								"rename": map[string]any{},
+								"transform": map[string]any{
+									"req": "`reqdata`",
+									"res": "`body`",
+								},
+								"args": map[string]any{
+									"query": []any{
+										map[string]any{
+											"name": "from",
+											"orig": "from",
+											"type": "`$STRING`",
+											"kind": "query",
+											"reqd": true,
+											"example": "EUR",
+										},
+										map[string]any{
+											"name": "to",
+											"orig": "to",
+											"type": "`$STRING`",
+											"kind": "query",
+											"reqd": true,
+											"example": "HKD,GBP,USD",
+										},
+									},
+								},
 								"select": map[string]any{
 									"exist": []any{
 										"from",
 										"to",
 									},
-								},
-								"transform": map[string]any{
-									"req": "`reqdata`",
-									"res": "`body`",
-								},
-								"parts": []any{
-									"api",
-									"rates",
 								},
 							},
 						},

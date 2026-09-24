@@ -1,7 +1,7 @@
 // Typed models for the EuroRates SDK.
 //
-// GENERATED from the API model: main.kit.entity.<e>.fields[] and per-op
-// params (op.<name>.points[].args.params[]). Field/param types come from the
+// GENERATED from the API model: main.kit.entity.<e>.fields{} and per-op
+// params (op.<name>.points[].g.params[]). Field/param types come from the
 // canonical type sentinels via @voxgig/sdkgen canonToType (source of truth:
 // @voxgig/apidef VALID_CANON). Do not edit by hand.
 package entity
@@ -14,8 +14,6 @@ import (
 
 // Currency is the typed data model for the currency entity.
 type Currency struct {
-	Name *string `json:"name,omitempty"`
-	Symbol *string `json:"symbol,omitempty"`
 }
 
 // CurrencyListMatch is the typed request payload for Currency.ListTyped.

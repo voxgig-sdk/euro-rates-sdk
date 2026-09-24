@@ -88,10 +88,12 @@ local function make_config()
         ["fields"] = {
           {
             ["name"] = "name",
+            ["title"] = "Name",
             ["type"] = "`$STRING`",
           },
           {
             ["name"] = "symbol",
+            ["title"] = "Symbol",
             ["type"] = "`$STRING`",
           },
         },
@@ -102,7 +104,6 @@ local function make_config()
             ["name"] = "list",
             ["points"] = {
               {
-                ["args"] = {},
                 ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/api/all-currencies",
@@ -114,15 +115,17 @@ local function make_config()
                     ["lit"] = "all-currencies",
                   },
                 },
-                ["select"] = {},
-                ["transform"] = {
-                  ["req"] = "`reqdata`",
-                  ["res"] = "`body`",
-                },
                 ["parts"] = {
                   "api",
                   "all-currencies",
                 },
+                ["rename"] = {},
+                ["transform"] = {
+                  ["req"] = "`reqdata`",
+                  ["res"] = "`body`",
+                },
+                ["args"] = {},
+                ["select"] = {},
               },
             },
           },
@@ -140,26 +143,6 @@ local function make_config()
             ["name"] = "load",
             ["points"] = {
               {
-                ["args"] = {
-                  ["query"] = {
-                    {
-                      ["example"] = "EUR",
-                      ["kind"] = "query",
-                      ["name"] = "from",
-                      ["orig"] = "from",
-                      ["reqd"] = true,
-                      ["type"] = "`$STRING`",
-                    },
-                    {
-                      ["example"] = "HKD,GBP,USD",
-                      ["kind"] = "query",
-                      ["name"] = "to",
-                      ["orig"] = "to",
-                      ["reqd"] = true,
-                      ["type"] = "`$STRING`",
-                    },
-                  },
-                },
                 ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/api/rates",
@@ -171,19 +154,40 @@ local function make_config()
                     ["lit"] = "rates",
                   },
                 },
+                ["parts"] = {
+                  "api",
+                  "rates",
+                },
+                ["rename"] = {},
+                ["transform"] = {
+                  ["req"] = "`reqdata`",
+                  ["res"] = "`body`",
+                },
+                ["args"] = {
+                  ["query"] = {
+                    {
+                      ["name"] = "from",
+                      ["orig"] = "from",
+                      ["type"] = "`$STRING`",
+                      ["kind"] = "query",
+                      ["reqd"] = true,
+                      ["example"] = "EUR",
+                    },
+                    {
+                      ["name"] = "to",
+                      ["orig"] = "to",
+                      ["type"] = "`$STRING`",
+                      ["kind"] = "query",
+                      ["reqd"] = true,
+                      ["example"] = "HKD,GBP,USD",
+                    },
+                  },
+                },
                 ["select"] = {
                   ["exist"] = {
                     "from",
                     "to",
                   },
-                },
-                ["transform"] = {
-                  ["req"] = "`reqdata`",
-                  ["res"] = "`body`",
-                },
-                ["parts"] = {
-                  "api",
-                  "rates",
                 },
               },
             },

@@ -16,12 +16,6 @@ const FEATURE_CLASS: Record<string, typeof BaseFeature> = {
 }
 
 
-// Per-feature plugin DEFINITIONS (voxgig/plugin `Definition` values), from
-// the model's active plugin groups. A feature that takes a `plugins` option
-// (secrets over sekreto) reads its own entry; a feature with no plugins has
-// none. Named imports above make each definition statically reachable, so
-// an SDK carries exactly the plugin modules its model selects — the same
-// leanness the old side-effect registry imports bought, without a registry.
 const FEATURE_PLUGINS: Record<string, any[]> = {
   
 }
@@ -32,7 +26,6 @@ class Config {
   makeFeature(this: any, fn: string) {
     const fc = FEATURE_CLASS[fn]
     const fi = new fc()
-    // TODO: errors etc
     return fi
   }
 
@@ -142,10 +135,12 @@ class Config {
       "fields": [
         {
           "name": "name",
+          "title": "Name",
           "type": "`$STRING`"
         },
         {
           "name": "symbol",
+          "title": "Symbol",
           "type": "`$STRING`"
         }
       ],
@@ -156,7 +151,6 @@ class Config {
           "name": "list",
           "points": [
             {
-              "args": {},
               "kind": "http",
               "method": "GET",
               "orig": "/api/all-currencies",
@@ -168,15 +162,17 @@ class Config {
                   "lit": "all-currencies"
                 }
               ],
-              "select": {},
+              "parts": [
+                "api",
+                "all-currencies"
+              ],
+              "rename": {},
               "transform": {
                 "req": "`reqdata`",
                 "res": "`body`"
               },
-              "parts": [
-                "api",
-                "all-currencies"
-              ]
+              "args": {},
+              "select": {}
             }
           ]
         }
@@ -194,26 +190,6 @@ class Config {
           "name": "load",
           "points": [
             {
-              "args": {
-                "query": [
-                  {
-                    "example": "EUR",
-                    "kind": "query",
-                    "name": "from",
-                    "orig": "from",
-                    "reqd": true,
-                    "type": "`$STRING`"
-                  },
-                  {
-                    "example": "HKD,GBP,USD",
-                    "kind": "query",
-                    "name": "to",
-                    "orig": "to",
-                    "reqd": true,
-                    "type": "`$STRING`"
-                  }
-                ]
-              },
               "kind": "http",
               "method": "GET",
               "orig": "/api/rates",
@@ -225,20 +201,41 @@ class Config {
                   "lit": "rates"
                 }
               ],
+              "parts": [
+                "api",
+                "rates"
+              ],
+              "rename": {},
+              "transform": {
+                "req": "`reqdata`",
+                "res": "`body`"
+              },
+              "args": {
+                "query": [
+                  {
+                    "name": "from",
+                    "orig": "from",
+                    "type": "`$STRING`",
+                    "kind": "query",
+                    "reqd": true,
+                    "example": "EUR"
+                  },
+                  {
+                    "name": "to",
+                    "orig": "to",
+                    "type": "`$STRING`",
+                    "kind": "query",
+                    "reqd": true,
+                    "example": "HKD,GBP,USD"
+                  }
+                ]
+              },
               "select": {
                 "exist": [
                   "from",
                   "to"
                 ]
-              },
-              "transform": {
-                "req": "`reqdata`",
-                "res": "`body`"
-              },
-              "parts": [
-                "api",
-                "rates"
-              ]
+              }
             }
           ]
         }

@@ -100,10 +100,12 @@ module EuroRatesConfig
           "fields" => [
             {
               "name" => "name",
+              "title" => "Name",
               "type" => "`$STRING`",
             },
             {
               "name" => "symbol",
+              "title" => "Symbol",
               "type" => "`$STRING`",
             },
           ],
@@ -114,7 +116,6 @@ module EuroRatesConfig
               "name" => "list",
               "points" => [
                 {
-                  "args" => {},
                   "kind" => "http",
                   "method" => "GET",
                   "orig" => "/api/all-currencies",
@@ -126,15 +127,17 @@ module EuroRatesConfig
                       "lit" => "all-currencies",
                     },
                   ],
-                  "select" => {},
-                  "transform" => {
-                    "req" => "`reqdata`",
-                    "res" => "`body`",
-                  },
                   "parts" => [
                     "api",
                     "all-currencies",
                   ],
+                  "rename" => {},
+                  "transform" => {
+                    "req" => "`reqdata`",
+                    "res" => "`body`",
+                  },
+                  "args" => {},
+                  "select" => {},
                 },
               ],
             },
@@ -152,26 +155,6 @@ module EuroRatesConfig
               "name" => "load",
               "points" => [
                 {
-                  "args" => {
-                    "query" => [
-                      {
-                        "example" => "EUR",
-                        "kind" => "query",
-                        "name" => "from",
-                        "orig" => "from",
-                        "reqd" => true,
-                        "type" => "`$STRING`",
-                      },
-                      {
-                        "example" => "HKD,GBP,USD",
-                        "kind" => "query",
-                        "name" => "to",
-                        "orig" => "to",
-                        "reqd" => true,
-                        "type" => "`$STRING`",
-                      },
-                    ],
-                  },
                   "kind" => "http",
                   "method" => "GET",
                   "orig" => "/api/rates",
@@ -183,20 +166,41 @@ module EuroRatesConfig
                       "lit" => "rates",
                     },
                   ],
+                  "parts" => [
+                    "api",
+                    "rates",
+                  ],
+                  "rename" => {},
+                  "transform" => {
+                    "req" => "`reqdata`",
+                    "res" => "`body`",
+                  },
+                  "args" => {
+                    "query" => [
+                      {
+                        "name" => "from",
+                        "orig" => "from",
+                        "type" => "`$STRING`",
+                        "kind" => "query",
+                        "reqd" => true,
+                        "example" => "EUR",
+                      },
+                      {
+                        "name" => "to",
+                        "orig" => "to",
+                        "type" => "`$STRING`",
+                        "kind" => "query",
+                        "reqd" => true,
+                        "example" => "HKD,GBP,USD",
+                      },
+                    ],
+                  },
                   "select" => {
                     "exist" => [
                       "from",
                       "to",
                     ],
                   },
-                  "transform" => {
-                    "req" => "`reqdata`",
-                    "res" => "`body`",
-                  },
-                  "parts" => [
-                    "api",
-                    "rates",
-                  ],
                 },
               ],
             },

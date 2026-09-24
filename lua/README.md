@@ -43,7 +43,7 @@ local currencys, err = client:Currency():list()
 if err then error(err) end
 
 for _, item in ipairs(currencys) do
-  print(item["name"])
+  print(item)
 end
 ```
 

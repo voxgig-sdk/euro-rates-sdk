@@ -26,53 +26,8 @@
   "requests": {
     "GET /api/all-currencies": {
       "provenance": "operation-contract",
-      "contract": {
-        "operationId": "getAllCurrencies",
-        "parameters": [],
-        "protocol": "http",
-        "responses": {
-          "200": {
-            "content": {
-              "application/json": {
-                "example": [
-                  {
-                    "name": "US Dollar",
-                    "symbol": "USD"
-                  },
-                  {
-                    "name": "Euro",
-                    "symbol": "EUR"
-                  },
-                  {
-                    "name": "Japanese Yen",
-                    "symbol": "JPY"
-                  },
-                  {
-                    "name": "British Pound",
-                    "symbol": "GBP"
-                  }
-                ],
-                "schema": {
-                  "items": {
-                    "properties": {
-                      "name": {
-                        "type": "string"
-                      },
-                      "symbol": {
-                        "type": "string"
-                      }
-                    },
-                    "type": "object"
-                  },
-                  "type": "array"
-                }
-              }
-            },
-            "description": "List of currencies"
-          }
-        },
-        "securitySource": "unspecified"
-      }
+      "version": 2,
+      "source": "openapi3"
     }
   }
 }
