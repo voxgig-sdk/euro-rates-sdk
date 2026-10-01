@@ -33,6 +33,8 @@ require_relative 'transform_response'
 
 EuroRatesUtility.registrar = ->(u) {
   u.clean = EuroRatesUtilities::Clean
+  u.clean_add = EuroRatesUtilities::CleanAdd
+  u.clean_explain = EuroRatesUtilities::CleanExplain
   u.done = EuroRatesUtilities::Done
   u.make_error = EuroRatesUtilities::MakeError
   u.feature_add = EuroRatesUtilities::FeatureAdd

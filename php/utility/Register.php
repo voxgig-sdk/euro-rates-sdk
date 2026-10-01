@@ -37,6 +37,8 @@ require_once __DIR__ . '/TransformResponse.php';
 
 EuroRatesUtility::setRegistrar(function (EuroRatesUtility $u): void {
     $u->clean = [EuroRatesClean::class, 'call'];
+    $u->clean_add = [EuroRatesClean::class, 'add'];
+    $u->clean_explain = [EuroRatesDone::class, 'clean_explain'];
     $u->done = [EuroRatesDone::class, 'call'];
     $u->make_error = [EuroRatesMakeError::class, 'call'];
     $u->feature_add = [EuroRatesFeatureAdd::class, 'call'];
