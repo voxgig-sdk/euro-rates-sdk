@@ -54,6 +54,7 @@ func makeErrorUtil(ctx *core.Context, err error) (any, error) {
 		Ctx:                ctx,
 		Result:             cleanUtil(ctx, result),
 		Spec:               cleanUtil(ctx, spec),
+		Status:             result.Status,
 	}
 	if se, ok := err.(*core.EuroRatesError); ok {
 		sdkErr.Code = cleanUtil(ctx, se.Code).(string)

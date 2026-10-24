@@ -17,7 +17,12 @@ const PLAN = [
         "args": [],
         "select": {},
         "headers": [],
+        "cookies": [],
+        "responseMedia": [
+            "application/json"
+        ],
         "query": [],
+        "queryArgs": [],
         "auth": null,
         "status": 200,
         "sample": [
@@ -48,9 +53,23 @@ const PLAN = [
             "to": "HKD,GBP,USD"
         },
         "headers": [],
+        "cookies": [],
+        "responseMedia": [
+            "application/json"
+        ],
         "query": [
             "from",
             "to"
+        ],
+        "queryArgs": [
+            {
+                "name": "from",
+                "wire": "from"
+            },
+            {
+                "name": "to",
+                "wire": "to"
+            }
         ],
         "auth": null,
         "status": 200,

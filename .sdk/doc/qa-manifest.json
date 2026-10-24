@@ -3,5 +3,12 @@
     "SUMMARY.md"
   ],
   "config": ".sdk/doc/qa/vale.ini",
-  "routes": {}
+  "routes": {},
+  "quoted": {
+    "SUMMARY.md": [
+      "Free API connect to https://www.ecb.europa.eu",
+      "List of currencies",
+      "Successful response. Returns either a single currency rate or multiple currency rates"
+    ]
+  }
 }

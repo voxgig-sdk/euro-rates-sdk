@@ -32,6 +32,10 @@ main: kit: entity: currency: {
           }
           m: "GET"
           o: "/api/all-currencies"
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
           s: [
             {
               lit: "api"

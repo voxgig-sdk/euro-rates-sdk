@@ -10,6 +10,9 @@ Object.defineProperty(exports, "config", { enumerable: true, get: function () { 
 const EuroRatesEntityBase_1 = require("./EuroRatesEntityBase");
 Object.defineProperty(exports, "EuroRatesEntityBase", { enumerable: true, get: function () { return EuroRatesEntityBase_1.EuroRatesEntityBase; } });
 const Utility_1 = require("./utility/Utility");
+const ResultBodyUtility_1 = require("./utility/ResultBodyUtility");
+const MakeRequestUtility_1 = require("./utility/MakeRequestUtility");
+const PrepareMethodUtility_1 = require("./utility/PrepareMethodUtility");
 const BaseFeature_1 = require("./feature/base/BaseFeature");
 Object.defineProperty(exports, "BaseFeature", { enumerable: true, get: function () { return BaseFeature_1.BaseFeature; } });
 const stdutil = new Utility_1.Utility();
@@ -90,12 +93,17 @@ class EuroRatesSDK {
             ctrl: fetchargs.ctrl || {},
         }, this._rootctx);
         const options = this._options;
+        const method = String(fetchargs.method || 'GET').toUpperCase();
+        if (!(0, PrepareMethodUtility_1.allowed)(options.allow.method, method)) {
+            return ctx.error('spec_method_allow', 'Method "' + method +
+                '" not allowed by SDK option allow.method value: "' + options.allow.method + '"');
+        }
         const spec = {
             base: options.base,
             prefix: options.prefix,
             suffix: options.suffix,
             path: fetchargs.path || '',
-            method: fetchargs.method || 'GET',
+            method,
             params: fetchargs.params || {},
             query: fetchargs.query || {},
             headers: prepareHeaders(ctx),
@@ -119,7 +127,7 @@ class EuroRatesSDK {
     // Blocking it means denying BOTH the 'direct' and 'graphql' tokens, since
     // either one reaches the same endpoint.
     async direct(fetchargs) {
-        if (!this._options.allow.op.includes('direct')) {
+        if (!(0, PrepareMethodUtility_1.allowed)(this._options.allow.op, 'direct')) {
             return {
                 ok: false,
                 err: new Error('EuroRatesSDK: direct: operation not allowed by' +
@@ -138,19 +146,22 @@ class EuroRatesSDK {
         const makeContext = utility.makeContext;
         const fetchdef = await this.prepare(fetchargs);
         if (fetchdef instanceof Error) {
-            return fetchdef;
+            return { ok: false, err: utility.clean(this._rootctx, fetchdef) };
         }
         let ctx = makeContext({
             opname: 'direct',
             ctrl: (fetchargs || {}).ctrl || {},
         }, this._rootctx);
         try {
+            if (true === fetchdef.signal?.aborted) {
+                throw fetchdef.signal.reason;
+            }
             const fetched = await fetcher(ctx, fetchdef.url, fetchdef);
             if (null == fetched) {
                 return { ok: false, err: ctx.error('direct_no_response', 'response: undefined') };
             }
             else if (fetched instanceof Error) {
-                return { ok: false, err: utility.clean(ctx, fetched) };
+                return { ok: false, err: utility.clean(ctx, (0, MakeRequestUtility_1.abortError)(ctx, fetched)) };
             }
             const status = fetched.status;
             // No body responses (204 No Content, 304 Not Modified) and explicit
@@ -162,30 +173,45 @@ class EuroRatesSDK {
                 : (headers || {})['content-length'];
             const noBody = 204 === status || 304 === status || '0' === String(contentLength);
             let json = undefined;
+            let err = undefined;
             if (!noBody) {
+                let text = undefined;
                 try {
-                    json = 'function' === typeof fetched.json ? await fetched.json() : fetched.json;
+                    const raw = fetched;
+                    if ('function' === typeof raw.text) {
+                        text = await raw.text();
+                        json = '' === text.trim() ? undefined : JSON.parse(text);
+                    }
+                    else {
+                        json = 'function' === typeof fetched.json ? await fetched.json() : fetched.json;
+                    }
                 }
                 catch (parseErr) {
-                    // Body wasn't valid JSON — surface the raw response rather than
-                    // throwing. data stays undefined; callers can inspect status/headers.
-                    json = undefined;
+                    if ('SyntaxError' !== parseErr?.name) {
+                        throw parseErr;
+                    }
+                    err = (0, ResultBodyUtility_1.unreadableBody)(ctx, {
+                        status, headers, text: text ?? parseErr.text, sent: fetchdef.headers,
+                        failed: 200 <= status && status < 300 ? undefined :
+                            ctx.error('request_status', 'request: ' + status + ': ' + fetched.statusText),
+                    });
                 }
             }
             return {
-                ok: status >= 200 && status < 300,
+                ok: null == err && status >= 200 && status < 300,
                 status,
                 headers: fetched.headers,
                 data: json,
+                ...(null == err ? {} : { err: utility.clean(ctx, err) }),
             };
         }
         catch (err) {
-            return { ok: false, err: utility.clean(ctx, err) };
+            return { ok: false, err: utility.clean(ctx, (0, MakeRequestUtility_1.abortError)(ctx, err)) };
         }
     }
     async graphql(query, variables, ctrl) {
         const options = this._options;
-        if (!options.allow.op.includes('graphql')) {
+        if (!(0, PrepareMethodUtility_1.allowed)(options.allow.op, 'graphql')) {
             return {
                 ok: false,
                 err: new Error('EuroRatesSDK: graphql: operation not allowed by' +
@@ -198,9 +224,6 @@ class EuroRatesSDK {
             body: { query, variables: variables || {} },
             ctrl,
         });
-        if (res instanceof Error) {
-            return res;
-        }
         // Errors are read BEFORE any status check: a GraphQL parse or validation
         // failure comes back as HTTP 400 carrying the standard { errors: [...] }
         // body, and the raw path represents a non-2xx as { ok: false } with no

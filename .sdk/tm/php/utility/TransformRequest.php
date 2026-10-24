@@ -4,6 +4,7 @@ declare(strict_types=1);
 // EuroRates SDK utility: transform_request
 
 require_once __DIR__ . '/../core/Helpers.php';
+require_once __DIR__ . '/Param.php';
 
 class EuroRatesTransformRequest
 {
@@ -14,7 +15,7 @@ class EuroRatesTransformRequest
         if ($spec) {
             $spec->step = 'reqform';
         }
-        $data = self::omit($ctx->reqdata, self::header_arg_names($point));
+        $data = self::omit($ctx->reqdata, self::routed_arg_names($ctx));
         $transform = EuroRatesHelpers::to_map(\Voxgig\Struct\Struct::getprop($point, 'transform'));
         if (!$transform) {
             return self::strip_action($data);
@@ -34,19 +35,29 @@ class EuroRatesTransformRequest
         return self::omit($reqdata, ['$action']);
     }
 
-    // A header argument travels as a header, which PrepareHeaders sends, so
-    // the body is built from the request data without it.
-    private static function header_arg_names(mixed $point): array
+    // A header, cookie or query argument travels where PrepareHeaders or
+    // PrepareQuery sends it, so the body is built from the request data
+    // without it, unless the point marks it as a field the body keeps.
+    private static function routed_arg_names(EuroRatesContext $ctx): array
     {
-        $hl = $point ? \Voxgig\Struct\Struct::getpath($point, 'args.header') : null;
-        $names = [];
-        foreach (is_array($hl) ? $hl : [] as $hd) {
-            $name = \Voxgig\Struct\Struct::getprop($hd, 'name');
-            if (is_string($name) && '' !== $name) {
-                $names[] = $name;
+        $args = array_merge(EuroRatesParam::callArgs($ctx, 'header'),
+            EuroRatesParam::callArgs($ctx, 'cookie'), EuroRatesParam::callArgs($ctx, 'query'));
+        return array_values(array_filter(array_map(fn($arg) => $arg[0], $args),
+            fn($name) => !self::field_arg($ctx, $name)));
+    }
+
+    private static function field_arg(EuroRatesContext $ctx, string $name): bool
+    {
+        foreach (['header', 'cookie', 'query'] as $kind) {
+            $defs = $ctx->point ? \Voxgig\Struct\Struct::getpath($ctx->point, 'args.' . $kind) : null;
+            foreach (is_array($defs) ? $defs : [] as $ad) {
+                if ($name === \Voxgig\Struct\Struct::getprop($ad, 'name') &&
+                    true === \Voxgig\Struct\Struct::getprop($ad, 'field')) {
+                    return true;
+                }
             }
         }
-        return $names;
+        return false;
     }
 
     private static function omit(mixed $reqdata, array $names): mixed

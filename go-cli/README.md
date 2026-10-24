@@ -20,7 +20,6 @@ export EURO_RATES_APIKEY=sk_live_xxx
 
 # 4. Each command line is ONE boru expression, run against the API:
 ./euro-rates-cli list currency
-./euro-rates-cli list exchange_rate
 
 # 5. Override the API base URL for a single call
 EURO_RATES_BASE=https://api.example.com ./euro-rates-cli list currency

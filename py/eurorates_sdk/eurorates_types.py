@@ -30,5 +30,7 @@ class ExchangeRate(TypedDict):
     pass
 
 
-class ExchangeRateLoadMatch(TypedDict):
-    to: str
+ExchangeRateLoadMatch = TypedDict('ExchangeRateLoadMatch', {
+    "from": str,
+    "to": str,
+})
